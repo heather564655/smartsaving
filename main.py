@@ -1,4 +1,4 @@
-# main.py
+main.py
 # Telegram dating assistant bot for Heather (NY, 32, mechanic).
 # Replies to incoming DMs as Heather using Groq LLM with a fixed persona.
 # Human-like typing: simulated delays, typos, casual punctuation.
