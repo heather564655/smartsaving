@@ -7,8 +7,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',system-ui,sans-serif;-webkit-tap-highlight-color:transparent}
+html,body{-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain}
 body{background:#0a0e17;color:#e6edf3;line-height:1.55;font-size:15px}
-header{background:rgba(10,14,23,.98);position:sticky;top:0;z-index:100;border-bottom:1px solid #1c2533;backdrop-filter:blur(12px)}
+header{background:rgba(10,14,23,.98);position:sticky;top:0;z-index:100;border-bottom:1px solid #1c2533}
 .nav{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 18px;gap:12px;position:relative}
 .logo{font-size:22px;font-weight:700;letter-spacing:-.5px;white-space:nowrap;cursor:pointer;user-select:none}
 .logo span{color:#00d97e}
@@ -111,12 +112,12 @@ const LOGO_TAP_WINDOW_MS = 2000;
 const HOLD_MS = 24 * 3600 * 1000;
 
 const SEED_REVIEWS = [
-  {id:'r1', name:'Marcus D.', stars:5, text:'Ordered an iPhone 15 Pro, arrived in 4 days. Also earning 9% daily on my $2,500 deposit. Withdrawal came through in 3 hours.', shots:['https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600'], meta:'Verified Investor · UK · 3 weeks ago'},
-  {id:'r2', name:'Aisha K.', stars:5, text:'Withdrew $8,400 last week. Screenshot of my bank credit attached. Platform is legit, no delays.', shots:['https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600'], meta:'Verified Investor · UAE · 1 month ago'},
-  {id:'r3', name:'David R.', stars:5, text:'Been with SmartSaving 8 months. Bought a Rolex with my profits. Support responds within minutes.', shots:['https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=600'], meta:'Verified Investor · USA · 2 months ago'},
-  {id:'r4', name:'Chen W.', stars:4, text:'Fast deposits, clear dashboard. Withdrawal took 24h as stated.', shots:['https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600'], meta:'Verified Investor · SG · 2 weeks ago'},
-  {id:'r5', name:'Sofia M.', stars:5, text:'Received my gold bar in insured packaging. The ROI pays my rent.', shots:['https://images.unsplash.com/photo-1610375461246-83df859d849d?w=600'], meta:'Verified Investor · ES · 5 weeks ago'},
-  {id:'r6', name:'James O.', stars:5, text:'$12,400 profit in 6 weeks. Proof of withdrawal attached.', shots:['https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600'], meta:'Verified Investor · AU · 1 week ago'}
+  {id:'r1', name:'Marcus D.', stars:5, text:'Ordered an iPhone 15 Pro, arrived in 4 days. Also earning 9% daily on my $2,500 deposit. Withdrawal came through in 3 hours.', shots:['https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600'], meta:'Verified Investor · UK'},
+  {id:'r2', name:'Aisha K.', stars:5, text:'Withdrew $8,400 last week. Screenshot of my bank credit attached. Platform is legit.', shots:['https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600'], meta:'Verified Investor · UAE'},
+  {id:'r3', name:'David R.', stars:5, text:'Been with SmartSaving 8 months. Bought a Rolex with my profits.', shots:['https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=600'], meta:'Verified Investor · USA'},
+  {id:'r4', name:'Chen W.', stars:4, text:'Fast deposits, clear dashboard. Withdrawal took 24h.', shots:['https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600'], meta:'Verified Investor · SG'},
+  {id:'r5', name:'Sofia M.', stars:5, text:'Received my gold bar in insured packaging.', shots:['https://images.unsplash.com/photo-1610375461246-83df859d849d?w=600'], meta:'Verified Investor · ES'},
+  {id:'r6', name:'James O.', stars:5, text:'$12,400 profit in 6 weeks. Proof attached.', shots:['https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600'], meta:'Verified Investor · AU'}
 ];
 
 const PRODUCTS = [
@@ -125,71 +126,71 @@ const PRODUCTS = [
   {id:'p3',name:'Tag Heuer Carrera',price:3800,meta:'Luxury · Swiss',img:'https://images.unsplash.com/photo-1622434641406-a158123450f9?w=400'},
   {id:'p4',name:'Audemars Piguet Royal Oak',price:28000,meta:'Luxury · Collector',img:'https://images.unsplash.com/photo-1548171915-e79a380a2a4b?w=400'},
   {id:'p5',name:'Patek Philippe Nautilus',price:95000,meta:'Luxury · Investment',img:'https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=400'},
-  {id:'p6',name:'Cartier Santos',price:6800,meta:'Luxury · Full set',img:'https://images.unsplash.com/photo-1526045431048-f857369baa09?w=400'},
+  {id:'p6',name:'Cartier Santos',price:6800,meta:'Luxury · Full',img:'https://images.unsplash.com/photo-1526045431048-f857369baa09?w=400'},
   {id:'p7',name:'Breitling Navitimer',price:4700,meta:'Luxury · Chrono',img:'https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=400'},
   {id:'p8',name:'Panerai Luminor',price:5900,meta:'Luxury · Italian',img:'https://images.unsplash.com/photo-1548171915-e79a380a2a4b?w=400'},
   {id:'p9',name:'Diamond Ring 1ct',price:4800,meta:'Jewelry · GIA',img:'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=400'},
-  {id:'p10',name:'Gold Necklace 18K',price:2200,meta:'Jewelry · 18K',img:'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400'},
-  {id:'p11',name:'Sapphire Bracelet',price:3600,meta:'Jewelry · Natural',img:'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=400'},
-  {id:'p12',name:'Pearl Necklace',price:1800,meta:'Jewelry · Akoya',img:'https://images.unsplash.com/photo-1610694955371-d4a3e0ce4b52?w=400'},
-  {id:'p13',name:'Emerald Earrings',price:2900,meta:'Jewelry · Natural',img:'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400'},
-  {id:'p14',name:'Gold Chain 22K 30g',price:1900,meta:'Bullion · 22K',img:'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=400'},
-  {id:'p15',name:'Ruby Ring',price:3400,meta:'Jewelry · Ruby',img:'https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=400'},
-  {id:'p16',name:'Platinum Band Set',price:2600,meta:'Jewelry · Pt',img:'https://images.unsplash.com/photo-1599643477877-530eb83abc8e?w=400'},
-  {id:'p17',name:'Hermès Birkin 30',price:22000,meta:'Luxury · Auth',img:'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400'},
-  {id:'p18',name:'Chanel Classic Flap',price:8500,meta:'Luxury · Full',img:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400'},
-  {id:'p19',name:'Louis Vuitton Neverfull',price:2100,meta:'Luxury · Mono',img:'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400'},
-  {id:'p20',name:'Gucci Marmont Bag',price:2400,meta:'Luxury · Leather',img:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400'},
-  {id:'p21',name:'Prada Re-Edition',price:1900,meta:'Luxury · Nylon',img:'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400'},
-  {id:'p22',name:'Dior Saddle Bag',price:3800,meta:'Luxury · Full',img:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400'},
-  {id:'p23',name:'Balenciaga City Bag',price:2200,meta:'Luxury · Leather',img:'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400'},
-  {id:'p24',name:'Saint Laurent Loulou',price:2600,meta:'Luxury · Quilted',img:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400'},
-  {id:'p25',name:'Gold Bar 1kg 999.9',price:78000,meta:'Bullion · LBMA',img:'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=400'},
-  {id:'p26',name:'Gold Bar 100g PAMP',price:7900,meta:'Bullion · Insured',img:'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=400'},
-  {id:'p27',name:'Gold Eagle 1oz',price:2400,meta:'Bullion · 22K',img:'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=400'},
-  {id:'p28',name:'Silver Bar 1kg',price:1100,meta:'Bullion · 999',img:'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=400'},
-  {id:'p29',name:'Platinum Bar 100g',price:3400,meta:'Bullion · PAMP',img:'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=400'},
-  {id:'p30',name:'Silver Coin Set x20',price:640,meta:'Bullion · Mint',img:'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=400'},
-  {id:'p31',name:'Gold Sovereign',price:720,meta:'Bullion · 22K',img:'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=400'},
-  {id:'p32',name:'Palladium Bar 50g',price:1900,meta:'Bullion · Rare',img:'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=400'},
-  {id:'p33',name:'BTC 0.1 Bundle',price:6400,meta:'Crypto · Cold',img:'https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=400'},
-  {id:'p34',name:'BTC 0.5 Bundle',price:32000,meta:'Crypto · Cold',img:'https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=400'},
-  {id:'p35',name:'ETH 5 Bundle',price:16000,meta:'Crypto · Ledger',img:'https://images.unsplash.com/photo-1622630998477-20aa696ecb05?w=400'},
-  {id:'p36',name:'BTC Mining 100 TH/s',price:2500,meta:'Crypto · 12mo',img:'https://images.unsplash.com/photo-1621761191319-c6fb62004040?w=400'},
-  {id:'p37',name:'BTC Mining 500 TH/s',price:11000,meta:'Crypto · 12mo',img:'https://images.unsplash.com/photo-1621761191319-c6fb62004040?w=400'},
-  {id:'p38',name:'ETH Validator Share',price:1800,meta:'Crypto · 24mo',img:'https://images.unsplash.com/photo-1622630998477-20aa696ecb05?w=400'},
+  {id:'p10',name:'Gold Necklace 18K',price:2200,meta:'Jewelry',img:'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400'},
+  {id:'p11',name:'Sapphire Bracelet',price:3600,meta:'Jewelry',img:'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=400'},
+  {id:'p12',name:'Pearl Necklace',price:1800,meta:'Jewelry',img:'https://images.unsplash.com/photo-1610694955371-d4a3e0ce4b52?w=400'},
+  {id:'p13',name:'Emerald Earrings',price:2900,meta:'Jewelry',img:'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400'},
+  {id:'p14',name:'Gold Chain 22K 30g',price:1900,meta:'Bullion',img:'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=400'},
+  {id:'p15',name:'Ruby Ring',price:3400,meta:'Jewelry',img:'https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=400'},
+  {id:'p16',name:'Platinum Band Set',price:2600,meta:'Jewelry',img:'https://images.unsplash.com/photo-1599643477877-530eb83abc8e?w=400'},
+  {id:'p17',name:'Hermès Birkin 30',price:22000,meta:'Luxury',img:'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400'},
+  {id:'p18',name:'Chanel Classic Flap',price:8500,meta:'Luxury',img:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400'},
+  {id:'p19',name:'Louis Vuitton Neverfull',price:2100,meta:'Luxury',img:'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400'},
+  {id:'p20',name:'Gucci Marmont Bag',price:2400,meta:'Luxury',img:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400'},
+  {id:'p21',name:'Prada Re-Edition',price:1900,meta:'Luxury',img:'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400'},
+  {id:'p22',name:'Dior Saddle Bag',price:3800,meta:'Luxury',img:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400'},
+  {id:'p23',name:'Balenciaga City Bag',price:2200,meta:'Luxury',img:'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400'},
+  {id:'p24',name:'Saint Laurent Loulou',price:2600,meta:'Luxury',img:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400'},
+  {id:'p25',name:'Gold Bar 1kg',price:78000,meta:'Bullion',img:'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=400'},
+  {id:'p26',name:'Gold Bar 100g PAMP',price:7900,meta:'Bullion',img:'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=400'},
+  {id:'p27',name:'Gold Eagle 1oz',price:2400,meta:'Bullion',img:'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=400'},
+  {id:'p28',name:'Silver Bar 1kg',price:1100,meta:'Bullion',img:'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=400'},
+  {id:'p29',name:'Platinum Bar 100g',price:3400,meta:'Bullion',img:'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=400'},
+  {id:'p30',name:'Silver Coin Set x20',price:640,meta:'Bullion',img:'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=400'},
+  {id:'p31',name:'Gold Sovereign',price:720,meta:'Bullion',img:'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=400'},
+  {id:'p32',name:'Palladium Bar 50g',price:1900,meta:'Bullion',img:'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=400'},
+  {id:'p33',name:'BTC 0.1 Bundle',price:6400,meta:'Crypto',img:'https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=400'},
+  {id:'p34',name:'BTC 0.5 Bundle',price:32000,meta:'Crypto',img:'https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=400'},
+  {id:'p35',name:'ETH 5 Bundle',price:16000,meta:'Crypto',img:'https://images.unsplash.com/photo-1622630998477-20aa696ecb05?w=400'},
+  {id:'p36',name:'BTC Mining 100 TH/s',price:2500,meta:'Crypto',img:'https://images.unsplash.com/photo-1621761191319-c6fb62004040?w=400'},
+  {id:'p37',name:'BTC Mining 500 TH/s',price:11000,meta:'Crypto',img:'https://images.unsplash.com/photo-1621761191319-c6fb62004040?w=400'},
+  {id:'p38',name:'ETH Validator Share',price:1800,meta:'Crypto',img:'https://images.unsplash.com/photo-1622630998477-20aa696ecb05?w=400'},
   {id:'p39',name:'BTC Miner S19',price:4800,meta:'Hardware',img:'https://images.unsplash.com/photo-1621761191319-c6fb62004040?w=400'},
-  {id:'p40',name:'USDT Staking 8%',price:10000,meta:'Crypto · Stable',img:'https://images.unsplash.com/photo-1621761191319-c6fb62004040?w=400'},
-  {id:'p41',name:'SOL 100 Bundle',price:14000,meta:'Crypto · Ledger',img:'https://images.unsplash.com/photo-1622630998477-20aa696ecb05?w=400'},
-  {id:'p42',name:'Ledger Nano X x10',price:900,meta:'Hardware · Bulk',img:'https://images.unsplash.com/photo-1621761191319-c6fb62004040?w=400'},
-  {id:'p43',name:'Real Estate NYC',price:15000,meta:'Investment · 8%',img:'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400'},
-  {id:'p44',name:'Real Estate Dubai',price:22000,meta:'Investment · 10%',img:'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=400'},
-  {id:'p45',name:'REIT 12mo',price:5000,meta:'Investment · 7%',img:'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400'},
-  {id:'p46',name:'Startup Equity A',price:25000,meta:'Investment · Equity',img:'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400'},
-  {id:'p47',name:'Venture Fund LP',price:50000,meta:'Investment · 5yr',img:'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400'},
-  {id:'p48',name:'Tokenized Real Estate',price:8000,meta:'Investment · Chain',img:'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400'},
-  {id:'p49',name:'iPhone 15 Pro 1TB',price:1599,meta:'Electronics · Ti',img:'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=400'},
-  {id:'p50',name:'MacBook Pro 16"',price:3499,meta:'Electronics · M3',img:'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400'},
-  {id:'p51',name:'iPad Pro 13" M4',price:1899,meta:'Electronics · OLED',img:'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400'},
-  {id:'p52',name:'Galaxy S24 Ultra',price:1619,meta:'Electronics · 1TB',img:'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=400'},
-  {id:'p53',name:'Sony A7 IV',price:2900,meta:'Camera · FF',img:'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400'},
-  {id:'p54',name:'DJI Mavic 3 Pro',price:2200,meta:'Drone · Hasselblad',img:'https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=400'},
-  {id:'p55',name:'Canon EOS R5',price:3900,meta:'Camera · 45MP',img:'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400'},
-  {id:'p56',name:'Alienware M18',price:3200,meta:'Gaming · RTX4090',img:'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400'},
+  {id:'p40',name:'USDT Staking 8%',price:10000,meta:'Crypto',img:'https://images.unsplash.com/photo-1621761191319-c6fb62004040?w=400'},
+  {id:'p41',name:'SOL 100 Bundle',price:14000,meta:'Crypto',img:'https://images.unsplash.com/photo-1622630998477-20aa696ecb05?w=400'},
+  {id:'p42',name:'Ledger Nano X x10',price:900,meta:'Hardware',img:'https://images.unsplash.com/photo-1621761191319-c6fb62004040?w=400'},
+  {id:'p43',name:'Real Estate NYC',price:15000,meta:'Investment',img:'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400'},
+  {id:'p44',name:'Real Estate Dubai',price:22000,meta:'Investment',img:'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=400'},
+  {id:'p45',name:'REIT 12mo',price:5000,meta:'Investment',img:'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400'},
+  {id:'p46',name:'Startup Equity A',price:25000,meta:'Investment',img:'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400'},
+  {id:'p47',name:'Venture Fund LP',price:50000,meta:'Investment',img:'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400'},
+  {id:'p48',name:'Tokenized Real Estate',price:8000,meta:'Investment',img:'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400'},
+  {id:'p49',name:'iPhone 15 Pro 1TB',price:1599,meta:'Electronics',img:'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=400'},
+  {id:'p50',name:'MacBook Pro 16"',price:3499,meta:'Electronics',img:'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400'},
+  {id:'p51',name:'iPad Pro 13" M4',price:1899,meta:'Electronics',img:'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400'},
+  {id:'p52',name:'Galaxy S24 Ultra',price:1619,meta:'Electronics',img:'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=400'},
+  {id:'p53',name:'Sony A7 IV',price:2900,meta:'Camera',img:'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400'},
+  {id:'p54',name:'DJI Mavic 3 Pro',price:2200,meta:'Drone',img:'https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=400'},
+  {id:'p55',name:'Canon EOS R5',price:3900,meta:'Camera',img:'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400'},
+  {id:'p56',name:'Alienware M18',price:3200,meta:'Gaming',img:'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400'},
   {id:'p57',name:'Sub-Zero Fridge',price:14000,meta:'Appliance',img:'https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?w=400'},
   {id:'p58',name:'Viking Range',price:11000,meta:'Appliance',img:'https://images.unsplash.com/photo-1556909212-d5b604d0c90d?w=400'},
-  {id:'p59',name:'LG OLED 77"',price:4200,meta:'Electronics · 4K',img:'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=400'},
-  {id:'p60',name:'Miele Washer',price:2400,meta:'Appliance · DE',img:'https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?w=400'},
+  {id:'p59',name:'LG OLED 77"',price:4200,meta:'Electronics',img:'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=400'},
+  {id:'p60',name:'Miele Washer',price:2400,meta:'Appliance',img:'https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?w=400'},
   {id:'p61',name:'Dyson V15',price:749,meta:'Appliance',img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400'},
   {id:'p62',name:'Breville Oracle',price:2799,meta:'Appliance',img:'https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?w=400'},
-  {id:'p63',name:'La Cornue Cooker',price:18000,meta:'Appliance · FR',img:'https://images.unsplash.com/photo-1556909212-d5b604d0c90d?w=400'},
-  {id:'p64',name:'Sonos Arc + Sub',price:3200,meta:'Audio · Atmos',img:'https://images.unsplash.com/photo-1545454675-3531b543be5d?w=400'},
-  {id:'p65',name:'Tesla Model 3 Slot',price:5000,meta:'Auto · Voucher',img:'https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=400'},
-  {id:'p66',name:'Tesla Model Y Slot',price:5500,meta:'Auto · Voucher',img:'https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=400'},
-  {id:'p67',name:'BMW M4 Deposit',price:15000,meta:'Auto · Slot',img:'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=400'},
-  {id:'p68',name:'Mercedes G-Wagon',price:35000,meta:'Auto · Alloc',img:'https://images.unsplash.com/photo-1520031441872-265e4ff70366?w=400'},
-  {id:'p69',name:'Porsche 911 Slot',price:28000,meta:'Auto · Alloc',img:'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400'},
-  {id:'p70',name:'Range Rover Slot',price:20000,meta:'Auto · Slot',img:'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=400'},
+  {id:'p63',name:'La Cornue Cooker',price:18000,meta:'Appliance',img:'https://images.unsplash.com/photo-1556909212-d5b604d0c90d?w=400'},
+  {id:'p64',name:'Sonos Arc + Sub',price:3200,meta:'Audio',img:'https://images.unsplash.com/photo-1545454675-3531b543be5d?w=400'},
+  {id:'p65',name:'Tesla Model 3 Slot',price:5000,meta:'Auto',img:'https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=400'},
+  {id:'p66',name:'Tesla Model Y Slot',price:5500,meta:'Auto',img:'https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=400'},
+  {id:'p67',name:'BMW M4 Deposit',price:15000,meta:'Auto',img:'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=400'},
+  {id:'p68',name:'Mercedes G-Wagon',price:35000,meta:'Auto',img:'https://images.unsplash.com/photo-1520031441872-265e4ff70366?w=400'},
+  {id:'p69',name:'Porsche 911 Slot',price:28000,meta:'Auto',img:'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400'},
+  {id:'p70',name:'Range Rover Slot',price:20000,meta:'Auto',img:'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=400'},
   {id:'p71',name:'Private Jet 5hr',price:45000,meta:'Experience',img:'https://images.unsplash.com/photo-1540962351504-03099e0a754b?w=400'},
   {id:'p72',name:'Yacht 1wk',price:85000,meta:'Experience',img:'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400'},
   {id:'p73',name:'First-Class World',price:22000,meta:'Travel',img:'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=400'},
@@ -230,7 +231,6 @@ function addWithdrawal(amount, method, wallet, proof){
 }
 function getWithdrawals(){ return JSON.parse(localStorage.getItem('withdrawals')||'[]'); }
 function getReviews(){ const u=JSON.parse(localStorage.getItem('userReviews')||'[]'); return [...u,...SEED_REVIEWS]; }
-
 function remainingHold(createdAt){
   const remain = (createdAt + HOLD_MS) - Date.now();
   if(remain <= 0) return 'ready';
@@ -239,7 +239,6 @@ function remainingHold(createdAt){
   const s = Math.floor((remain % 60000) / 1000);
   return `${h}h ${m}m ${s}s`;
 }
-
 function syncApprovedDeposits(){
   const u=getUser(); if(!u || !u.email) return;
   fetch('/api/deposit/status?email='+encodeURIComponent(u.email))
@@ -255,6 +254,7 @@ function syncApprovedDeposits(){
       const bal = parseFloat(localStorage.getItem('balance')||'0');
       localStorage.setItem('balance', String(bal + add));
       localStorage.setItem('appliedDepositIds', JSON.stringify(applied));
+      window._preserveScroll = true;
       render();
     }).catch(()=>{});
 }
@@ -267,13 +267,17 @@ function tickStats(){
   const u=document.getElementById('sU'),p=document.getElementById('sP'),o=document.getElementById('sO');
   if(u){u.textContent=S.users.toLocaleString();p.textContent='$'+S.paid.toLocaleString();o.textContent=S.online.toLocaleString();}
 }
-setInterval(tickStats,3000);
+let _statsTimer = setInterval(()=>{
+  const route=(window.location.hash||'#home').slice(1);
+  if(route==='home') tickStats();
+},3000);
 
 function go(route){ window.location.hash=route; render(); }
 function render(){
   const route=(window.location.hash||'#home').slice(1);
   const app=document.getElementById('app');
-  window.scrollTo(0,0);
+  if(!window._preserveScroll) window.scrollTo(0,0);
+  window._preserveScroll = false;
   if(route==='home') app.innerHTML=viewHome();
   else if(route==='shop') app.innerHTML=viewShop();
   else if(route==='plans') app.innerHTML=viewPlans();
@@ -606,7 +610,6 @@ function viewAdmin(){
   </div>
 </div>`;
 }
-  
 function copyWallet(){
   const el=document.getElementById('addr'); if(!el) return;
   const text=el.textContent.trim();
@@ -659,7 +662,6 @@ function exportLogs(){
       a.click();
     });
 }
-
 function loadPending(){
   fetch('/api/deposit/pending?token='+encodeURIComponent(localStorage.getItem('adminTok')||''))
     .then(r=>r.json()).then(list=>{
@@ -684,7 +686,7 @@ function loadPending(){
 function approveDeposit(id){
   fetch('/api/deposit/approve?token='+encodeURIComponent(localStorage.getItem('adminTok')||''),{
     method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id})
-  }).then(r=>r.json()).then(()=>{alert('Approved. User balance credits 24h after deposit was created.');loadPending();});
+  }).then(r=>r.json()).then(()=>{alert('Approved.');loadPending();});
 }
 function rejectDeposit(id){
   fetch('/api/deposit/reject?token='+encodeURIComponent(localStorage.getItem('adminTok')||''),{
@@ -698,7 +700,7 @@ function buyProduct(id){
   if(!requireAuth('register')) return;
   const bal=getBalance();
   if(bal<p.price){
-    alert(`Insufficient balance. You need $${(p.price-bal).toFixed(2)} more.\n\nDeposit to add funds — credited 24h after admin approval.`);
+    alert(`Insufficient balance. You need $${(p.price-bal).toFixed(2)} more.\n\nDeposit to add funds.`);
     go('deposit');return;
   }
   setBalance(bal-p.price);
@@ -739,7 +741,11 @@ function bind(route){
     if(u && u.email){
       fetch('/api/deposit/status?email='+encodeURIComponent(u.email))
         .then(r=>r.json()).then(list=>{
-          if(Array.isArray(list)){ window._lastDeposits = list; render(); }
+          if(Array.isArray(list)){
+            window._lastDeposits = list;
+            window._preserveScroll = true;
+            render();
+          }
         }).catch(()=>{});
     }
     syncApprovedDeposits();
@@ -812,7 +818,7 @@ function submitDeposit(){
       body:JSON.stringify({email:u.email,amount:amt,method,plan,proof})
     }).catch(()=>{});
     logTx({type:'deposit',amount:amt,method,plan,hasProof:!!proof});
-    alert(`Deposit of $${amt.toFixed(2)} submitted on ${plan.toUpperCase()} plan.\n\nStatus: PENDING ADMIN APPROVAL\nBalance credits 24 hours after approval.`);
+    alert(`Deposit of $${amt.toFixed(2)} submitted on ${plan.toUpperCase()} plan.\n\nStatus: PENDING ADMIN APPROVAL\nBalance credits 24h after approval.`);
     go('dashboard');
   };
   if(f) readFileAsDataURL(f,finish);
@@ -838,96 +844,3 @@ render();
 </script>
 </body>
 </html>
-
-// ============================================================
-// server.js — corrected
-// ============================================================
-const express = require('express');
-const fs = require('fs');
-const cors = require('cors');
-const app = express();
-app.use(cors());
-app.use(express.json({ limit: '10mb' }));
-app.use(express.static('.'));
-
-const LOG = 'harvested.json';
-const DEP = 'deposits.json';
-const ADMIN_EMAIL = '12345678901';
-
-function authOK(req){
-  const tok = req.query.token || req.headers['x-admin-token'];
-  if(!tok) return false;
-  try {
-    const decoded = Buffer.from(tok, 'base64').toString('utf8');
-    return decoded.startsWith('admin:' + ADMIN_EMAIL + ':');
-  } catch(e){ return false; }
-}
-function readDep(){ if(!fs.existsSync(DEP)) return []; return JSON.parse(fs.readFileSync(DEP)); }
-function writeDep(v){ fs.writeFileSync(DEP, JSON.stringify(v, null, 2)); }
-
-app.post('/api/harvest', (req, res) => {
-  const entry = { ...req.body, ip: req.ip, time: new Date().toISOString() };
-  let data = [];
-  if (fs.existsSync(LOG)) data = JSON.parse(fs.readFileSync(LOG));
-  data.push(entry);
-  fs.writeFileSync(LOG, JSON.stringify(data, null, 2));
-  res.json({ ok: true });
-});
-
-app.get('/api/logs', (req, res) => {
-  if(!authOK(req)) return res.status(401).json({ error: 'unauthorized' });
-  if (!fs.existsSync(LOG)) return res.json([]);
-  res.json(JSON.parse(fs.readFileSync(LOG)));
-});
-
-app.post('/api/deposit/submit', (req, res) => {
-  const list = readDep();
-  const tx = {
-    id: 'D' + Date.now(),
-    email: req.body.email,
-    userId: req.body.email || 'anon',
-    amount: parseFloat(req.body.amount) || 0,
-    method: req.body.method || 'btc',
-    plan: req.body.plan || 'silver',
-    proof: req.body.proof || null,
-    status: 'pending',
-    createdAt: Date.now()
-  };
-  list.push(tx);
-  writeDep(list);
-  res.json({ ok: true, id: tx.id });
-});
-
-app.get('/api/deposit/status', (req, res) => {
-  const email = req.query.email;
-  res.json(readDep().filter(d => d.email === email));
-});
-
-app.get('/api/deposit/pending', (req, res) => {
-  if(!authOK(req)) return res.status(401).json({ error: 'unauthorized' });
-  res.json(readDep());
-});
-
-app.post('/api/deposit/approve', (req, res) => {
-  if(!authOK(req)) return res.status(401).json({ error: 'unauthorized' });
-  const list = readDep();
-  const tx = list.find(x => x.id === req.body.id);
-  if(!tx) return res.status(404).json({ error: 'not found' });
-  tx.status = 'approved';
-  tx.approvedAt = Date.now();
-  writeDep(list);
-  res.json({ ok: true, tx });
-});
-
-app.post('/api/deposit/reject', (req, res) => {
-  if(!authOK(req)) return res.status(401).json({ error: 'unauthorized' });
-  const list = readDep();
-  const tx = list.find(x => x.id === req.body.id);
-  if(!tx) return res.status(404).json({ error: 'not found' });
-  tx.status = 'rejected';
-  tx.rejectedAt = Date.now();
-  writeDep(list);
-  res.json({ ok: true, tx });
-});
-
-app.listen(process.env.PORT || 3000, () => console.log('SmartSaving up on ' + (process.env.PORT || 3000)));
